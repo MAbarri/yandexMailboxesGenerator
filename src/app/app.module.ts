@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './service/api.service';
 import { DnsManagementComponent } from './dns-management/dns-management.component';
 import { LoginComponent } from './login/login.component';
+import { MailboxManagementComponent } from './mailbox-management/mailbox-management.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LoginComponent } from './login/login.component';
     EmployeeListComponent,
     EmployeeEditComponent,
     DnsManagementComponent,
-    LoginComponent
+    LoginComponent,
+    MailboxManagementComponent
   ],
   imports: [
     BrowserModule,

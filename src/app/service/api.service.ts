@@ -10,7 +10,7 @@ import { environment } from './../../environments/environment';
 
 export class ApiService {
 
-  baseUri:string = 'http://localhost:4000/api';
+  baseUri:string = '/backendapi/';
   goDaddyBaseUri:string = '/v1/';
   yandexBaseUri:string = '/v6/';
   yandexEmailBaseUri:string = '/api2/';
@@ -69,9 +69,67 @@ export class ApiService {
         catchError(this.errorMgmt)
       )
   }
+  // SUBDOMAIN -----------------------------------------------------------------------------------------------
+
+
+  // Create
+  createMultipleSubdomain(data): Observable<any> {
+    let url = `${this.baseUri}/subdomain/createMultiple`;
+    return this.http.post(url, {subdomains: data})
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+  createSubdomain(data): Observable<any> {
+    let url = `${this.baseUri}/subdomain/create`;
+    return this.http.post(url, data)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
+  // Get all subdomains
+  getSubdomains() {
+    return this.http.get(`${this.baseUri}/subdomain`);
+  }
+
+  // Get subdomain
+  getSubdomain(id): Observable<any> {
+    let url = `${this.baseUri}/subdomain/read/${id}`;
+    return this.http.get(url, {headers: this.headers}).pipe(
+      map((res: Response) => {
+        return res || {}
+      }),
+      catchError(this.errorMgmt)
+    )
+  }
+
+  // Update subdomain
+  updateSubdomain(id, data): Observable<any> {
+    let url = `${this.baseUri}/subdomain/update/${id}`;
+    return this.http.put(url, data, { headers: this.headers }).pipe(
+      catchError(this.errorMgmt)
+    )
+  }
+
+  // Delete subdomain
+  deleteSubdomain(id): Observable<any> {
+    let url = `${this.baseUri}/subdomain/delete/${id}`;
+    return this.http.delete(url, { headers: this.headers }).pipe(
+      catchError(this.errorMgmt)
+    )
+  }
+
+
+
+
+
+
+
+  // EMLPOYEE -----------------------------------------------------------------------------------------------
   // Create
   createEmployee(data): Observable<any> {
-    let url = `${this.baseUri}/create`;
+    let url = `${this.baseUri}/employee/create`;
     return this.http.post(url, data)
       .pipe(
         catchError(this.errorMgmt)
@@ -85,7 +143,7 @@ export class ApiService {
 
   // Get employee
   getEmployee(id): Observable<any> {
-    let url = `${this.baseUri}/read/${id}`;
+    let url = `${this.baseUri}/employee/read/${id}`;
     return this.http.get(url, {headers: this.headers}).pipe(
       map((res: Response) => {
         return res || {}
@@ -96,7 +154,7 @@ export class ApiService {
 
   // Update employee
   updateEmployee(id, data): Observable<any> {
-    let url = `${this.baseUri}/update/${id}`;
+    let url = `${this.baseUri}/employee/update/${id}`;
     return this.http.put(url, data, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
     )
@@ -104,7 +162,7 @@ export class ApiService {
 
   // Delete employee
   deleteEmployee(id): Observable<any> {
-    let url = `${this.baseUri}/delete/${id}`;
+    let url = `${this.baseUri}/employee/delete/${id}`;
     return this.http.delete(url, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
     )

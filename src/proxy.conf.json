@@ -1,4 +1,10 @@
 {
+    "/backendapi/*": {
+        "target": "http://localhost:4000",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
     "/v1/*": {
         "target": "https://api.godaddy.com",
         "secure": false,

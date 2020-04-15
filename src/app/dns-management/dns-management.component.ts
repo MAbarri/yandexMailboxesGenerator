@@ -121,6 +121,21 @@ export class DnsManagementComponent implements OnInit {
       })
       this.yandexEmailsForm = new FormGroup(group);
       console.log('this.yandexEmailsForm', this.yandexEmailsForm)
+      this.persisteSubdomainsInDatabse();
+  }
+  persisteSubdomainsInDatabse(){
+    let databasePersistance = [];
+    for (let i = 0; i < this.generatedSubdomains.length; i++) {
+        databasePersistance.push({
+          "name": this.generatedSubdomains[i]
+        })
+    }
+    this.apiService.createMultipleSubdomain(databasePersistance).subscribe(
+      (res) => {
+        console.log('Employee successfully created!')
+      }, (error) => {
+        console.log(error);
+      });
   }
   createYandexDomain(){
     for (let i = 0; i < this.generatedSubdomains.length; i++) {
