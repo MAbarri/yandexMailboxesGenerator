@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row" style="margin-bottom: 20px">
+    <div class="col-md-12">
+      <h2>Please get connect to Yandex</h2>
+      <a href="https://oauth.yandex.com/authorize?response_type=code&client_id={{yandexClientID}}" target="_blank">Click Here</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form [formGroup]="generateForm" (ngSubmit)="generateCode()">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="domainname">Result Code</label>
+              <input type="domain" class="form-control" id="domainname" formControlName="resultCode">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Setup Client Code & redirect to DNS Management</button>
+      </form>
+    </div>
+  </div>
+</div>
