@@ -51,8 +51,7 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ],
-              "proxyConfig": "src/proxy.conf.json"
+              ]
             }
           }
         },
