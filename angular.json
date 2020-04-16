@@ -63,7 +63,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "mean-stack-crud-app:build:production"
+              "browserTarget": "mean-stack-crud-app:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             }
           }
         },
