@@ -51,18 +51,21 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "proxyConfig": "src/proxy.conf.json"
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mean-stack-crud-app:build"
+            "browserTarget": "mean-stack-crud-app:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mean-stack-crud-app:build:production"
+              "browserTarget": "mean-stack-crud-app:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             }
           }
         },

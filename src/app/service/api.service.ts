@@ -11,9 +11,9 @@ import { environment } from './../../environments/environment';
 export class ApiService {
 
   baseUri:string = '/backendapi/';
-  goDaddyBaseUri:string = 'https://api.godaddy.com/v1/';
-  yandexBaseUri:string = 'https://api.directory.yandex.net/v6/';
-  yandexEmailBaseUri:string = 'https://pddimp.yandex.ru/api2/';
+  goDaddyBaseUri:string = '/v1/';
+  yandexBaseUri:string = '/v6/';
+  yandexEmailBaseUri:string = '/api2/';
   headers = new HttpHeaders().set("x-debug", "true").set('Access-Control-Allow-Origin', '*').set('Content-Type', 'application/json').set('Authorization', "sso-key "+environment.godaddy.key+':'+environment.godaddy.secret);
   constructor(private http: HttpClient) { }
 
