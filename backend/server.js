@@ -18,7 +18,7 @@ mongoose.connect(dbConfig.db, {
 )
 
 // Setting up port with express js
-const SubdomainRoute = require('./routes/Subdomain.route')
+const SubdomainRoute = require('../backend/routes/subdomain.route')
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
