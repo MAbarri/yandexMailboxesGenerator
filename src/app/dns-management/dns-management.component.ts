@@ -90,16 +90,16 @@ export class DnsManagementComponent implements OnInit {
     for (let i = 0; i < this.generatedSubdomains.length; i++) {
       if(this.validateDomainsForm.value[this.generatedSubdomains[i]])
         godaddydata.push({
-          "data": this.validateDomainsForm.value[this.generatedSubdomains[i]],
-          "name": "yandex-verification",
+          "data": "yandex-verification: d6c5c2aaf8f50936",
+          "name": this.generatedSubdomains[i],
           "type": "TXT"
         })
     }
-    godaddydata.push({
-      "data": "Record",
-      "name": "Record",
-      "type": "MX"
-    })
+    // godaddydata.push({
+    //   "data": "Record",
+    //   "name": "Record",
+    //   "type": "MX"
+    // })
     console.log('godaddydata', godaddydata)
     this.apiService.persisteGoDaddy(this.generatedsnform.value.domain, godaddydata).subscribe(
       (res) => {
