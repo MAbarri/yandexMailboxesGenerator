@@ -13,8 +13,9 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "underscore": "latest",
-    "mongoose": "^5.5.2"
+    "https": "^1.0.0",
+    "mongoose": "^5.5.2",
+    "underscore": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.18.11"

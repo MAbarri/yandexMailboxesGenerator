@@ -121,7 +121,7 @@ export class DnsManagementComponent implements OnInit {
       })
       this.yandexEmailsForm = new FormGroup(group);
       console.log('this.yandexEmailsForm', this.yandexEmailsForm)
-      this.persisteSubdomainsInDatabse();
+      // this.persisteSubdomainsInDatabse();
   }
   persisteSubdomainsInDatabse(){
     let databasePersistance = [];

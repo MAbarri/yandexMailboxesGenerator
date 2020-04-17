@@ -19,11 +19,23 @@ export class ApiService {
 
   // Create
   persisteGoDaddy(domain, data): Observable<any> {
-    let url = `${this.goDaddyBaseUri}domains/`+domain+`/records`;
-    return this.http.patch(url, data, {headers: this.headers})
+
+    let url = `${this.baseUri}makeExternalCall`;
+    // let url = `${this.yandexBaseUri}domains/`;
+    let requestheaders = { 'Content-Type': 'application/json', 'Authorization': "sso-key "+environment.godaddy.key+':'+environment.godaddy.secret}
+    let requestbody = {
+        host:"api.ote-godaddy.com",
+        path:`${this.goDaddyBaseUri}domains/`+domain+`/records`,
+        method:"PATCH",
+        headers:requestheaders,
+        body:data
+    }
+
+    return this.http.post(url, requestbody)
       .pipe(
         catchError(this.errorMgmt)
       )
+
   }
   // checkAvailable
   checkAvailable(domain): Observable<any> {
@@ -48,23 +60,40 @@ export class ApiService {
   }
   // Create
   createYandexDomainEmails(data): Observable<any> {
-    let yandexheaders = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('PddToken', data.pddToken);
-    let url = `${this.yandexEmailBaseUri}admin/email/add`;
-    return this.http.post(url, {domain: data.domain, login: data.login, password: data.password}, {headers: yandexheaders})
-      .pipe(
-        catchError(this.errorMgmt)
-      )
+
+
+      let url = `${this.baseUri}makeExternalCall`;
+      // let url = `${this.yandexBaseUri}domains/`;
+      let requestheaders = { 'Content-Type': 'application/json', 'PddToken': data.pddToken}
+      let requestbody = {
+          host:"pddimp.yandex.ru",
+          path:`${this.yandexEmailBaseUri}admin/email/add`,
+          method:"POST",
+          headers:requestheaders,
+          body: {domain: data.domain, login: data.login, password: data.password}
+      }
+
+      return this.http.post(url, requestbody)
+        .pipe(
+          catchError(this.errorMgmt)
+        )
+
   }
   // getYandexDomains
   getYandexDomains(): Observable<any> {
-    let yandexheaders = new HttpHeaders().set("x-debug", "true")
-      .set('Content-Type', 'application/json')
-      .set('Authorization', "OAuth "+localStorage.getItem("yandexClientCode"))
-      .set("X-Org-ID", environment.yandexClientID);
-    let url = `${this.yandexBaseUri}domains/`;
-    return this.http.get(url, {headers: yandexheaders})
+
+    let url = `${this.baseUri}makeExternalCall`;
+    // let url = `${this.yandexBaseUri}domains/`;
+    let requestheaders = { 'Content-Type': 'application/json', 'Authorization': "OAuth "+localStorage.getItem("yandexClientCode"), "X-Org-ID": environment.yandexClientID }
+    let requestbody = {
+        host:"api.directory.yandex.net",
+        path:"/v6/domains",
+        method:"GET",
+        headers:requestheaders,
+        body:undefined
+    }
+
+    return this.http.post(url, requestbody)
       .pipe(
         catchError(this.errorMgmt)
       )

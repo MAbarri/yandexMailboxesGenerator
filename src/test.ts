@@ -18,3 +18,23 @@ getTestBed().initTestEnvironment(
 const context = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);
+
+// ,
+// "/v1/*": {
+//     "target": "https://api.godaddy.com",
+//     "secure": false,
+//     "changeOrigin": true,
+//     "logLevel": "debug"
+// },
+// "/v6/*": {
+//     "target": "https://api.directory.yandex.net",
+//     "secure": false,
+//     "changeOrigin": true,
+//     "logLevel": "debug"
+// },
+// "/api2/*": {
+//     "target": "https://pddimp.yandex.ru",
+//     "secure": false,
+//     "changeOrigin": true,
+//     "logLevel": "debug"
+// }
