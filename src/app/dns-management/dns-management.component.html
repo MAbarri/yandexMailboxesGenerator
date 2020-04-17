@@ -21,6 +21,22 @@
       </form>
     </div>
   </div>
+  <div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+      <h2>Add Subdomain Manually</h2>
+    </div>
+    <div class="col-md-12">
+      <form [formGroup]="manualSubdomainForm" (ngSubmit)="addManuallySubdomain()">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="domainname">Fill subdomain name</label>
+            <input type="text" class="form-control" id="domainname" formControlName="manualSubdomain">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Subdomain</button>
+      </form>
+    </div>
+  </div>
   <div class="row" *ngIf="generatedSubdomains && generatedSubdomains.length" style="margin: 20px -20px">
     <form class="col-md-12" style="margin-bottom: 20px" [formGroup]="validateDomainsForm" (ngSubmit)="validateDomainsSubmit()">
       <h5>Generated Domains ({{generatedSubdomains.length}})</h5>
@@ -52,22 +68,6 @@
       </div>
     </form>
   </div>
-  <!-- <div class="row" *ngIf="yandexSetup">
-    <div class="col-md-12">
-      <h2>Yandex Setup</h2>
-    </div>
-    <div class="col-md-12">
-      <form [formGroup]="yandexForm" (ngSubmit)="yandexSubmit()">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="domainname">Please fill Token obtained from Yandex for Domain : {{generatedsnform.value.domain}}</label>
-            <input type="text" class="form-control" id="domainname" formControlName="apitoken">
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  </div> -->
   <!-- <div class="row" *ngIf="emailsSetup">
     <div class="col-md-12">
       <h2>Yandex Users Setup</h2>

@@ -24,7 +24,7 @@ export class ApiService {
     // let url = `${this.yandexBaseUri}domains/`;
     let requestheaders = { 'Content-Type': 'application/json', 'Authorization': "sso-key "+environment.godaddy.key+':'+environment.godaddy.secret}
     let requestbody = {
-        host:"api.ote-godaddy.com",
+        host:"api.godaddy.com",
         path:`${this.goDaddyBaseUri}domains/`+domain+`/records`,
         method:"PATCH",
         headers:requestheaders,

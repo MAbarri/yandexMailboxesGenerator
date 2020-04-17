@@ -13,7 +13,7 @@ export class DnsManagementComponent implements OnInit {
   submitted = false;
   generatedsnform: FormGroup;
   yandexEmailsForm: FormGroup;
-  yandexForm: FormGroup;
+  manualSubdomainForm: FormGroup;
   validateDomainsForm: FormGroup;
   generatedSubdomains:any = [];
   yandexSetup:any;
@@ -38,8 +38,8 @@ export class DnsManagementComponent implements OnInit {
       domain: ['', [Validators.required]],
       subdomainCount: ['', [Validators.required]]
     })
-    this.yandexForm = this.fb.group({
-      apitoken: ['', [Validators.required]]
+    this.manualSubdomainForm = this.fb.group({
+      manualSubdomain: ['', [Validators.required]]
     })
     this.yandexEmailsForm = this.fb.group({
       emailCount: ['', [Validators.required]]
@@ -68,26 +68,20 @@ export class DnsManagementComponent implements OnInit {
       group[domain_input]=new FormControl('');
     })
     this.validateDomainsForm = new FormGroup(group);
-    console.log('this.validateDomainsForm', this.validateDomainsForm)
   }
-  yandexSubmit() {
+  addManuallySubdomain() {
     this.submitted = true;
-    if (!this.generatedsnform.valid) {
+    if (!this.manualSubdomainForm.valid) {
       return false;
     } else {
-      for (let i = 0; i < this.generatedsnform.value.subdomainCount; i++) {
-        let alreadyCreated = true
-        while (alreadyCreated) {
-          let newsubdomain =this.makeid(5)+"."+this.generatedsnform.value.domain
-          alreadyCreated = this.generatedSubdomains.indexOf(newsubdomain) != -1;
-          if(!alreadyCreated) {
-            this.generatedSubdomains.push(newsubdomain)
-            alreadyCreated = false
-          }
-        }
-      }
+      this.generatedSubdomains.push(this.manualSubdomainForm.value.manualSubdomain)
+      this.manualSubdomainForm.value.manualSubdomain = "";
     }
-
+    let group={}
+    this.generatedSubdomains.forEach(domain_input=>{
+      group[domain_input]=new FormControl('');
+    })
+    this.validateDomainsForm = new FormGroup(group);
   }
 
   validateDomainsSubmit(){
