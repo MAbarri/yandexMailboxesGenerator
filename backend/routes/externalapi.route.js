@@ -18,7 +18,7 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
     port: 80,
     path: req.body.path,
     method: req.body.method,
-    headers: _.extend(req.body.headers, originHost),
+    headers: req.body.headers,
     body: req.body.body
   };
   console.log('options', options)
