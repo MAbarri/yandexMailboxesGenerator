@@ -20,8 +20,8 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
     method: req.body.method,
     headers: req.body.headers,
     body: req.body.body,
-    key: fs.readFileSync('/etc/letsencrypt/live/generatengine.online/fullchain.pem', 'utf8'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/generatengine.online/privkey.pem', 'utf8')
+    key: fs.readFileSync('/var/www/html/yandexMailboxesGenerator/key.pem', 'utf8'),
+    cert: fs.readFileSync('/var/www/html/yandexMailboxesGenerator/server.crt', 'utf8')
   };
   console.log('options', options)
   https.request(options, function(httpres) {
