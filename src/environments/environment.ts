@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   yandexClientID: "b8b47f25cb1b45718d36fc50cd392466",
   godaddy: {
-    key: "dKt55jrUU8d5_5c4HA2Q3xnQSW52E1HiBBh",
-    secret: "8DRTbH5dQZavvT6C6jjwiW"
+    key: "3mM44Uah8XpP17_R3ptWCRM5ro7zQzenvDPkK",
+    secret: "8PncTNdwrCGf35R5vVnWea"
   }
 };
 //

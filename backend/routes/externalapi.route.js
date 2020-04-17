@@ -28,7 +28,7 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
     port: 80,
     method: req.body.method,
     headers: req.body.headers,
-    body: req.body.body,
+    data: req.body.body,
     rejectUnauthorized: false
   };
   options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
