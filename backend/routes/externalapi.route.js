@@ -21,7 +21,8 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
     headers: req.body.headers,
     body: req.body.body,
     key: fs.readFileSync('/var/www/html/yandexMailboxesGenerator/key.pem', 'utf8'),
-    cert: fs.readFileSync('/var/www/html/yandexMailboxesGenerator/server.crt', 'utf8')
+    cert: fs.readFileSync('/var/www/html/yandexMailboxesGenerator/server.crt', 'utf8'),
+    rejectUnauthorized: false
   };
   console.log('options', options)
   https.request(options, function(httpres) {
