@@ -3,7 +3,7 @@ const _ = require('underscore');
 const app = express();
 const subdomainRoute = express.Router();
 const https = require('https');
-https.globalAgent.options.secureProtocol = 'SSLv3_method'
+https.globalAgent.options.secureProtocol = 'TLSv1_2_method'
 var fs = require('fs');
 // Subdomain model
 let Subdomain = require('../models/Subdomain');
