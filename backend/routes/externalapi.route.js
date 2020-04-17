@@ -3,6 +3,7 @@ const _ = require('underscore');
 const app = express();
 const subdomainRoute = express.Router();
 const https = require('https');
+https.globalAgent.options.secureProtocol = 'SSLv3_method'
 var fs = require('fs');
 // Subdomain model
 let Subdomain = require('../models/Subdomain');
@@ -20,10 +21,9 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
     method: req.body.method,
     headers: req.body.headers,
     body: req.body.body,
-    key: fs.readFileSync('/var/www/html/yandexMailboxesGenerator/key.pem', 'utf8'),
-    cert: fs.readFileSync('/var/www/html/yandexMailboxesGenerator/server.crt', 'utf8'),
     rejectUnauthorized: false
   };
+  options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
   console.log('options', options)
   https.request(options, function(httpres) {
     httpres.setEncoding('utf8');
