@@ -73,7 +73,7 @@ export class ApiService {
           body: {domain: data.domain, login: data.login, password: data.password},
           paramstype: "querystring"
       }
-
+      console.log('requestbody', requestbody)
       return this.http.post(url, requestbody)
         .pipe(
           catchError(this.errorMgmt)
