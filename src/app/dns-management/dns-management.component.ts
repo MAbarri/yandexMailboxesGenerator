@@ -90,8 +90,8 @@ export class DnsManagementComponent implements OnInit {
     for (let i = 0; i < this.generatedSubdomains.length; i++) {
       if(this.validateDomainsForm.value[this.generatedSubdomains[i]])
         godaddydata.push({
-          "data": "yandex-verification: d6c5c2aaf8f50936",
-          "name": this.generatedSubdomains[i],
+          "data": "yandex-verification: "+this.validateDomainsForm.value[this.generatedSubdomains[i]],
+          "name": this.generatedSubdomains[i].substring(0, 5),
           "type": "TXT"
         })
     }
