@@ -25,8 +25,10 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
   // };
   let url = "https://"+req.body.host+req.body.path;
   if(req.body.paramstype == "querystring") {
-    _.each(_.keys(req.body.body), function(key){
-      url+="?"+key+"="+req.body.body[key];
+    _.each(_.keys(req.body.body), function(key, index){
+      if(index == 0) url+="?";
+      else url+="&";
+      url+=key+"="+req.body.body[key];
     })
   }
   var options = {
