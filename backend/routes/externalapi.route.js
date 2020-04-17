@@ -23,8 +23,14 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
   //   body: req.body.body,
   //   rejectUnauthorized: false
   // };
+  let url = "https://"+req.body.host+req.body.path;
+  if(req.body.paramstype == "querystring") {
+    _.each(_.keys(req.body.body), function(key){
+      url+="?"+key+"="+req.body.body[key];
+    })
+  }
   var options = {
-    url: "https://"+req.body.host+req.body.path,
+    url: url,
     port: 80,
     method: req.body.method,
     headers: req.body.headers,

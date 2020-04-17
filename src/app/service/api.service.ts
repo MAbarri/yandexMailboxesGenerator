@@ -70,7 +70,8 @@ export class ApiService {
           path:`${this.yandexEmailBaseUri}admin/email/add`,
           method:"POST",
           headers:requestheaders,
-          body: {domain: data.domain, login: data.login, password: data.password}
+          body: {domain: data.domain, login: data.login, password: data.password},
+          paramstype: "querystring"
       }
 
       return this.http.post(url, requestbody)
