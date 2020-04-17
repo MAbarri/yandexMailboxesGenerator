@@ -19,7 +19,9 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
     path: req.body.path,
     method: req.body.method,
     headers: req.body.headers,
-    body: req.body.body
+    body: req.body.body,
+    key: fs.readFileSync('/etc/letsencrypt/live/generatengine.online/fullchain.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/generatengine.online/privkey.pem')
   };
   console.log('options', options)
   https.request(options, function(httpres) {
