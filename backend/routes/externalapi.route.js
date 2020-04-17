@@ -3,7 +3,7 @@ const _ = require('underscore');
 const app = express();
 const subdomainRoute = express.Router();
 const https = require('https');
-
+var fs = require('fs');
 // Subdomain model
 let Subdomain = require('../models/Subdomain');
 
