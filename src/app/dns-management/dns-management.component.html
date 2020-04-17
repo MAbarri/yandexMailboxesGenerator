@@ -66,6 +66,7 @@
           <button style="float: right;" (click)="getYandexDomains()" type="button" class="btn btn-primary">Refresh Status</button>
         </div>
       </div>
+      <p *ngIf="addedRecordSuccess" style="color: green">added records successfully</p>
     </form>
   </div>
   <!-- <div class="row" *ngIf="emailsSetup">

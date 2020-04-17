@@ -11,6 +11,7 @@ import { environment } from './../../environments/environment';
 })
 export class DnsManagementComponent implements OnInit {
   submitted = false;
+  addedRecordSuccess= false;
   generatedsnform: FormGroup;
   yandexEmailsForm: FormGroup;
   manualSubdomainForm: FormGroup;
@@ -103,6 +104,8 @@ export class DnsManagementComponent implements OnInit {
     console.log('godaddydata', godaddydata)
     this.apiService.persisteGoDaddy(this.generatedsnform.value.domain, godaddydata).subscribe(
       (res) => {
+        if(res == "") this.addedRecordSuccess = true;
+        this.persisteSubdomainsInDatabse();
         console.log('Employee successfully created!')
         this.emailsSetup = true;
       }, (error) => {
@@ -115,7 +118,7 @@ export class DnsManagementComponent implements OnInit {
       })
       this.yandexEmailsForm = new FormGroup(group);
       console.log('this.yandexEmailsForm', this.yandexEmailsForm)
-      // this.persisteSubdomainsInDatabse();
+
   }
   persisteSubdomainsInDatabse(){
     let databasePersistance = [];

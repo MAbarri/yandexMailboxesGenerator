@@ -7,18 +7,22 @@
       <p>please fill PDD Tokens for created Subdomains in the inputs below</p>
     </div>
     <div class="col-md-12">
-      <form class="row" style="max-height: 200px; overflow-y: scroll;" [formGroup]="yandexEmailsForm" (ngSubmit)="yandexEmailsSubmit()">
-          <div class="col-md-12" *ngFor="let subdomain of generatedSubdomains; let i = index">
-            <div class="row">
-              <div class="col-md-6">
-                <p>PDD Key for : {{subdomain}}</p>
+      <form class="row" [formGroup]="yandexEmailsForm" (ngSubmit)="yandexEmailsSubmit()">
+        <div class="col-md-12">
+          <div class="row"  style="max-height: 200px; overflow-y: scroll;">
+            <div class="col-md-12" *ngFor="let subdomain of generatedSubdomains; let i = index">
+              <div class="row">
+                <div class="col-md-6">
+                  <p>PDD Key for : {{subdomain}}</p>
                 </div>
                 <div class="col-md-4" *ngIf="true || domainsStatus[subdomain] && !domainsStatus[subdomain].isverified">
                   <input type="text" class="form-control" id="subdomaincount" formControlName="{{subdomain}}" placeholder="PDD Tokens">
                 </div>
               </div>
             </div>
-        <button type="submit" class="btn btn-primary">Create 1000 Emails</button>
+          </div>
+        </div>
+            <button *ngIf="generatedSubdomains && generatedSubdomains.length" type="submit" class="btn btn-primary">Create 1000 Emails</button>
       </form>
     </div>
   </div>

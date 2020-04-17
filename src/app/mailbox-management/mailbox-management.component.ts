@@ -55,7 +55,7 @@ export class MailboxManagementComponent implements OnInit {
   }
   yandexEmailsSubmit(){
     for (let i = 0; i < this.generatedSubdomains.length; i++) {
-      if(true || this.domainsStatus[this.generatedSubdomains[i]] && this.domainsStatus[this.generatedSubdomains[i]].isverified) {
+      if(this.yandexEmailsForm.value[this.generatedSubdomains[i]]) {
         let requestData = {pddToken : this.yandexEmailsForm.value[this.generatedSubdomains[i]], domain: this.generatedSubdomains[i], login: this.makeid(6), password: this.makeid(10)}
         console.log('requestData', requestData)
         this.apiService.createYandexDomainEmails(requestData).subscribe(
