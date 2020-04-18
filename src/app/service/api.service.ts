@@ -62,7 +62,7 @@ export class ApiService {
   createYandexDomainEmails(data): Observable<any> {
 
 
-      let url = `${this.baseUri}makeExternalCall`;
+      let url = `${this.baseUri}createMultipleMailboxs`;
       // let url = `${this.yandexBaseUri}domains/`;
       let requestheaders = { 'Content-Type': 'application/json', 'PddToken': data.pddToken}
       let requestbody = {

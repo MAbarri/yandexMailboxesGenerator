@@ -52,4 +52,66 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
 
 });
 
+subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
+  let originHost = JSON.parse(JSON.stringify(req.headers));
+  // originHost.host = req.body.host;
+  delete originHost.referer;
+  delete originHost.host;
+
+  let url = "https://"+req.body.host+req.body.path;
+  if(req.body.paramstype == "querystring") {
+    _.each(_.keys(req.body.body), function(key, index){
+      if(index == 0) url+="?";
+      else url+="&";
+      url+=key+"="+req.body.body[key];
+    })
+  }
+  let createdMails = [];
+  var count = 0;
+  async.whilst(
+      function test(cb) { cb(null, count < 1000); },
+      function iter(callback) {
+        console.log('left :', 1000-count);
+          count++;
+          let mailData = JSON.parse(JSON.stringify(req.body.body));
+
+          mailData.login = makeid(6);
+          mailData.password = this.makeid(10);
+          createdMails.push({login: mailData.login, password: mailData.password});
+          var options = {
+            url: url,
+            port: 80,
+            method: req.body.method,
+            headers: req.body.headers,
+            data: mailData,
+            rejectUnauthorized: false
+          };
+          options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
+          console.log('options', options)
+          axios(options)
+          .then(function (response) {
+            callback();
+          })
+          .catch(function (error) {
+              callback(error);
+          });
+
+      },
+      function (err, n) {
+            Subdomain.findOneAndUpdate({name: req.body.body.domain}, {emails: {"$push": createdMails}}).exec(function(){
+              res.json({err: err});
+            })
+      }
+  );
+
+});
+function makeid(length) {
+   var result           = '';
+   var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789'
+   var charactersLength = characters.length
+   for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+   }
+   return result
+}
 module.exports = subdomainRoute;
