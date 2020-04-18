@@ -5,16 +5,13 @@ const Schema = mongoose.Schema;
 let Subdomain = new Schema({
    name: {
       type: String,
-      required: true, 
+      required: true,
       unique: true
    },
    status: {
       type: String
    },
-   emails: [{
-      login: String,
-      password: String
-   }]
+   emails: []
 }, {
    collection: 'subdomains'
 })
