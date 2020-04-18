@@ -63,7 +63,7 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   let createdMails = [];
   var count = 0;
   async.whilst(
-      function test(cb) { cb(null, count < 10); },
+      function test(cb) { cb(null, count < 4); },
       function iter(callback) {
         console.log('left :', 1000-count);
           count++;
@@ -93,12 +93,12 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
             console.log('response', response.data)
             setTimeout(function() {
                 callback(null, response.data);
-            }, 10000);
+            }, 30000);
           })
           .catch(function (error) {
             setTimeout(function() {
                 callback(error);
-              }, 10000);
+              }, 30000);
           });
 
       },
