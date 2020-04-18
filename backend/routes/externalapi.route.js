@@ -4,7 +4,6 @@ const app = express();
 const subdomainRoute = express.Router();
 const https = require('https');
 const axios = require('axios');
-const async = require('async');
 var fs = require('fs');
 // Subdomain model
 let Subdomain = require('../models/Subdomain');
@@ -61,53 +60,40 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
 
   let url = "https://"+req.body.host+req.body.path;
   let createdMails = [];
-  var count = 0;
-  async.whilst(
-      function test(cb) { cb(null, count < 4); },
-      function iter(callback) {
-        console.log('left :', 1000-count);
-          count++;
-          let mailData = JSON.parse(JSON.stringify(req.body.body));
 
-          mailData.login = makeid(6);
-          mailData.password = makeid(10);
-          createdMails.push({login: mailData.login, password: mailData.password});
-          if(req.body.paramstype == "querystring") {
-            _.each(_.keys(mailData), function(key, index){
-              if(index == 0) url+="?";
-              else url+="&";
-              url+=key+"="+mailData[key];
-            })
-          }
-          var options = {
-            url: url,
-            port: 80,
-            method: req.body.method,
-            headers: req.body.headers,
-            data: mailData,
-            rejectUnauthorized: false
-          };
-          options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
-          axios(options)
-          .then(function (response) {
-            console.log('response', response.data)
-            setTimeout(function() {
-                callback(null, response.data);
-            }, 30000);
-          })
-          .catch(function (error) {
-            setTimeout(function() {
-                callback(error);
-              }, 30000);
-          });
+  let mailData = JSON.parse(JSON.stringify(req.body.body));
 
-      },
-      function (err, n) {
-            Subdomain.findOneAndUpdate({name: req.body.body.domain}, {emails: createdMails}).exec(function(){
-              res.json({err: err, n: n});
-            })
-      }
-  );
+  mailData.login = makeid(6);
+  mailData.password = makeid(10);
+
+  if(req.body.paramstype == "querystring") {
+    _.each(_.keys(mailData), function(key, index){
+      if(index == 0) url+="?";
+      else url+="&";
+      url+=key+"="+mailData[key];
+    })
+  }
+
+  createdMails.push({login: mailData.login, password: mailData.password});
+  var options = {
+    url: url,
+    port: 80,
+    method: req.body.method,
+    headers: req.body.headers,
+    data: mailData,
+    rejectUnauthorized: false
+  };
+  options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
+  console.log('options', options)
+  axios(options)
+  .then(function (response) {
+        Subdomain.findOneAndUpdate({name: req.body.body.domain}, {emails: {"$push": createdMails}}).exec(function(){
+          res.json({response: response.data});
+        })
+  })
+  .catch(function (error) {
+    res.json({error: error});
+  });
 
 });
 function makeid(length) {
