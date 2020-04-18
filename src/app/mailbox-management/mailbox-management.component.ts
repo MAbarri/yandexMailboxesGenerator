@@ -11,6 +11,7 @@ import { environment } from './../../environments/environment';
 })
 export class MailboxManagementComponent implements OnInit {
   loaded = false;
+  created = 0;
   yandexEmailsForm: FormGroup;
   yandexForm: FormGroup;
   validateDomainsForm: FormGroup;
@@ -58,11 +59,12 @@ export class MailboxManagementComponent implements OnInit {
       if(this.yandexEmailsForm.value[this.generatedSubdomains[i]]) {
         let requestData = {pddToken : this.yandexEmailsForm.value[this.generatedSubdomains[i]], domain: this.generatedSubdomains[i]}
         console.log('requestData', requestData)
-        for (let i = 0; i < 500; i++) {
+        for (let i = 0; i < 1000; i++) {
 
           this.apiService.createYandexDomainEmails(requestData).subscribe(
             (res) => {
               console.log('success')
+              this.created ++;
             }, (error) => {
               console.log(error);
             });

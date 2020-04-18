@@ -25,5 +25,11 @@
             <button *ngIf="generatedSubdomains && generatedSubdomains.length" type="submit" class="btn btn-primary">Create 1000 Emails</button>
       </form>
     </div>
+    <div class="col-md-12" style="margin-top: 20px" *ngIf="this.created">
+      <p>Progress</p>
+      <div class="progress">
+        <div class="progress-bar bg-success" style="width:{{(created/1000)*100}}%">{{created}}/100</div>
+      </div>
+    </div>
   </div>
 </div>
