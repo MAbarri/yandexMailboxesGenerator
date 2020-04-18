@@ -88,10 +88,10 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
             rejectUnauthorized: false
           };
           options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
-          console.log('options', options)
           axios(options)
           .then(function (response) {
-            callback();
+            console.log('response', response)
+            callback(null, response);
           })
           .catch(function (error) {
               callback(error);
@@ -99,8 +99,8 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
 
       },
       function (err, n) {
-            Subdomain.findOneAndUpdate({name: req.body.body.domain}, {emails: {"$push": createdMails}}).exec(function(){
-              res.json({err: err});
+            Subdomain.findOneAndUpdate({name: req.body.body.domain}, {emails: createdMails}).exec(function(){
+              res.json({err: err, n: n});
             })
       }
   );
