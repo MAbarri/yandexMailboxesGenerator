@@ -5,6 +5,7 @@ const subdomainRoute = express.Router();
 const https = require('https');
 const axios = require('axios');
 var fs = require('fs');
+const { Parser } = require('json2csv');
 // Subdomain model
 let Subdomain = require('../models/Subdomain');
 

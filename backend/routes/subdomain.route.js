@@ -2,7 +2,8 @@ const express = require('express');
 const _ = require('underscore');
 const app = express();
 const subdomainRoute = express.Router();
-
+const csvjson = require('csvjson');
+const writeFile = require('fs').writeFile;
 // Subdomain model
 let Subdomain = require('../models/Subdomain');
 
@@ -25,6 +26,34 @@ subdomainRoute.route('/subdomain/create').post((req, res, next) => {
   })
 });
 
+// Get All Subdomains
+subdomainRoute.route('/exportExistingUsers').get((req, res) => {
+  console.log('exportExistingUsers')
+  Subdomain.find({}).lean().exec(function(err, data) {
+    if (err) {
+      return next(err)
+    } else {
+      let emails = [];
+      _.each(data, function(item){
+        emails = _.union(emails, _.map(data, function(subdomain){ return _.map(_.filter(subdomain.emails, function(mail){ return mail.login && mail.password}), function(email){ return {login: email.login+"@"+item.name, password: email.password}})}));
+      })
+      emails = _.flatten(emails);
+      // console.log('emails', emails)
+      const csvData = csvjson.toCSV(emails, {
+          headers: 'key'
+      });
+      writeFile('./routes/test-data.csv', csvData, (err) => {
+          if(err) {
+              console.log(err); // Do something to handle the error or just throw it
+              throw new Error(err);
+          }
+          console.log('Success!');
+          const file = `${__dirname}/test-data.csv`;
+          res.download(file); // Set disposition and send it.
+        });
+    }
+  })
+})
 // Get All Subdomains
 subdomainRoute.route('/subdomain/').get((req, res) => {
   Subdomain.find((error, data) => {

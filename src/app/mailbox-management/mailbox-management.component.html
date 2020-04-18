@@ -1,10 +1,13 @@
 <div class="container" *ngIf="loaded">
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
       <h2>Yandex Users Setup</h2>
       <p>You can get PDD Token for each created domain by <a href="https://pddimp.yandex.ru/api2/admin/get_token" target="_blank">Clicking here</a></p>
       <p>please fill PDD Tokens for created Subdomains in the inputs below</p>
+    </div>
+    <div class="col-md-4">
+      <button style="float: right;" (click)="exportExistingUsers()" type="button" class="btn btn-primary">Export Existing Users</button>
     </div>
     <div class="col-md-12">
       <form class="row" [formGroup]="yandexEmailsForm" (ngSubmit)="yandexEmailsSubmit()">
@@ -28,7 +31,7 @@
     <div class="col-md-12" style="margin-top: 20px" *ngIf="this.created">
       <p>Progress</p>
       <div class="progress">
-        <div class="progress-bar bg-success" style="width: {{created/10}}%">{{created}}</div>
+        <div class="progress-bar bg-success" [ngStyle]="{'width': (created/10)+'%'}">{{created}}</div>
       </div>
     </div>
   </div>

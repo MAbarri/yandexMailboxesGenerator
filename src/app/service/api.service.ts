@@ -100,6 +100,11 @@ export class ApiService {
   // SUBDOMAIN -----------------------------------------------------------------------------------------------
 
 
+  // geneateCSV
+    // Get all subdomains
+    exportExistingUsers() {
+      window.open(`${this.baseUri}exportExistingUsers`)
+    }
   // Create
   createMultipleSubdomain(data): Observable<any> {
     let url = `${this.baseUri}subdomain/createMultiple`;

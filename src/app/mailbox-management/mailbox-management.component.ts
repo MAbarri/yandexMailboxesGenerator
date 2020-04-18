@@ -72,6 +72,15 @@ export class MailboxManagementComponent implements OnInit {
       }
     }
   }
+  // downloadFile(data: any) {
+  //   const blob = new Blob([data], { type: 'text/csv' });
+  //   const url= window.URL.createObjectURL(blob);
+  //   console.log("url", url)
+  //   window.open(url);
+  // }
+  exportExistingUsers(){
+    this.apiService.exportExistingUsers();
+  }
   makeid(length) {
      var result           = '';
      var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789'
