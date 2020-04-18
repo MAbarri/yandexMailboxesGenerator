@@ -93,12 +93,12 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
             console.log('response', response.data)
             setTimeout(function() {
                 callback(null, response.data);
-            }, 2000);
+            }, 5000);
           })
           .catch(function (error) {
             setTimeout(function() {
                 callback(error);
-              }, 2000);
+              }, 5000);
           });
 
       },
