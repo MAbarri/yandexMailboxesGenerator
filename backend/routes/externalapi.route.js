@@ -60,13 +60,6 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   delete originHost.host;
 
   let url = "https://"+req.body.host+req.body.path;
-  if(req.body.paramstype == "querystring") {
-    _.each(_.keys(req.body.body), function(key, index){
-      if(index == 0) url+="?";
-      else url+="&";
-      url+=key+"="+req.body.body[key];
-    })
-  }
   let createdMails = [];
   var count = 0;
   async.whilst(
@@ -79,6 +72,13 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
           mailData.login = makeid(6);
           mailData.password = makeid(10);
           createdMails.push({login: mailData.login, password: mailData.password});
+          if(req.body.paramstype == "querystring") {
+            _.each(_.keys(mailData), function(key, index){
+              if(index == 0) url+="?";
+              else url+="&";
+              url+=key+"="+mailData[key];
+            })
+          }
           var options = {
             url: url,
             port: 80,
@@ -90,8 +90,8 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
           options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
           axios(options)
           .then(function (response) {
-            console.log('response', response)
-            callback(null, response);
+            console.log('response', response.data)
+            callback(null, response.data);
           })
           .catch(function (error) {
               callback(error);
