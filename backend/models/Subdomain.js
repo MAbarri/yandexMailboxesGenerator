@@ -11,7 +11,10 @@ let Subdomain = new Schema({
    status: {
       type: String
    },
-   emails: []
+   emails: [{
+      login: String,
+      password: String
+   }]
 }, {
    collection: 'subdomains'
 })

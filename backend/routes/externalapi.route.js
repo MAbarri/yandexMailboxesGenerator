@@ -86,7 +86,7 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
   axios(options)
   .then(function (response) {
-        Subdomain.findOneAndUpdate({name: req.body.body.domain}, {emails: {"$push": createdMails}}).exec(function(){
+        Subdomain.findOneAndUpdate({name: req.body.body.domain}, {"$push": {emails: createdMails}}).exec(function(){
           console.log('response.data', response.data)
           res.json({response: response.data});
         })
