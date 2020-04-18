@@ -95,12 +95,13 @@ export class DnsManagementComponent implements OnInit {
           "name": this.generatedSubdomains[i].substring(0, 5),
           "type": "TXT"
         })
+        godaddydata.push({
+          "data": "mx.yandex.net",
+          "name": this.generatedSubdomains[i].substring(0, 5),
+          "type": "MX",
+          "priority": 10
+        })
     }
-    // godaddydata.push({
-    //   "data": "Record",
-    //   "name": "Record",
-    //   "type": "MX"
-    // })
     console.log('godaddydata', godaddydata)
     this.apiService.persisteGoDaddy(this.generatedsnform.value.domain, godaddydata).subscribe(
       (res) => {
