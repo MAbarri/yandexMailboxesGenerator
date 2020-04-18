@@ -77,7 +77,7 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
           let mailData = JSON.parse(JSON.stringify(req.body.body));
 
           mailData.login = makeid(6);
-          mailData.password = this.makeid(10);
+          mailData.password = makeid(10);
           createdMails.push({login: mailData.login, password: mailData.password});
           var options = {
             url: url,
