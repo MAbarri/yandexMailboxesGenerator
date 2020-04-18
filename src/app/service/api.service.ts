@@ -60,30 +60,22 @@ export class ApiService {
   }
   // Create
   createYandexDomainEmails(data): Observable<any> {
-    let last =0;
-    while (last <5) {
-        setTimeout(() => {
-          last++;
-          let url = `${this.baseUri}createMultipleMailboxs`;
-          // let url = `${this.yandexBaseUri}domains/`;
-          let requestheaders = { 'Content-Type': 'application/json', 'PddToken': data.pddToken}
-          let requestbody = {
-            host:"pddimp.yandex.ru",
-            path:`${this.yandexEmailBaseUri}admin/email/add`,
-            method:"POST",
-            headers:requestheaders,
-            body: {domain: data.domain, login: data.login, password: data.password},
-            paramstype: "querystring"
-          }
-          console.log('requestbody', requestbody)
-          return this.http.post(url, requestbody)
-          .pipe(
-            catchError(this.errorMgmt)
-          )
-        }, 2000);
-    }
-
-
+      let url = `${this.baseUri}createMultipleMailboxs`;
+      // let url = `${this.yandexBaseUri}domains/`;
+      let requestheaders = { 'Content-Type': 'application/json', 'PddToken': data.pddToken}
+      let requestbody = {
+        host:"pddimp.yandex.ru",
+        path:`${this.yandexEmailBaseUri}admin/email/add`,
+        method:"POST",
+        headers:requestheaders,
+        body: {domain: data.domain, login: data.login, password: data.password},
+        paramstype: "querystring"
+      }
+      console.log('requestbody', requestbody)
+      return this.http.post(url, requestbody)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
 
   }
   // getYandexDomains
