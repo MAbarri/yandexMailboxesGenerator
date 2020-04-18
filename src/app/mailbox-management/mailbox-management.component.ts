@@ -58,19 +58,14 @@ export class MailboxManagementComponent implements OnInit {
       if(this.yandexEmailsForm.value[this.generatedSubdomains[i]]) {
         let requestData = {pddToken : this.yandexEmailsForm.value[this.generatedSubdomains[i]], domain: this.generatedSubdomains[i]}
         console.log('requestData', requestData)
+        for (let i = 0; i < 500; i++) {
 
-          let last =0;
-          while (last <5) {
-              setTimeout(() => {
-
-                this.apiService.createYandexDomainEmails(requestData).subscribe(
-                  (res) => {
-                    last++;
-                    console.log('Employee successfully created!')
-                  }, (error) => {
-                    console.log(error);
-                  });
-            }, 2000);
+          this.apiService.createYandexDomainEmails(requestData).subscribe(
+            (res) => {
+              console.log('success')
+            }, (error) => {
+              console.log(error);
+            });
         }
       }
     }
