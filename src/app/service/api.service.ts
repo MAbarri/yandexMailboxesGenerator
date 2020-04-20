@@ -78,12 +78,32 @@ export class ApiService {
       )
 
   }
+  // Create
+  createSubdomainsOrganizations(domain, pdd): Observable<any> {
+      let url = `${this.baseUri}makeExternalCall`;
+      // let url = `${this.yandexBaseUri}domains/`;
+      let requestheaders = { 'Content-Type': 'application/json', 'PddToken': pdd}
+      let requestbody = {
+        host:"pddimp.yandex.ru",
+        path:`${this.yandexEmailBaseUri}admin/domain/register`,
+        method:"POST",
+        headers:requestheaders,
+        body: {domain: domain},
+        paramstype: "querystring"
+      }
+      console.log('requestbody', requestbody)
+      return this.http.post(url, requestbody)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+
+  }
   // getYandexDomains
-  getYandexDomains(): Observable<any> {
+  getYandexDomains(pdd): Observable<any> {
 
     let url = `${this.baseUri}makeExternalCall`;
     // let url = `${this.yandexBaseUri}domains/`;
-    let requestheaders = { 'Content-Type': 'application/json', 'PddToken': "KZA4W4X7Y4SGLUUH4IHAKFH5FSCWQ7UR5MOJJRJOJP2K7K3MQRQA"}
+    let requestheaders = { 'Content-Type': 'application/json', 'PddToken': pdd}
     let requestbody = {
         host:"pddimp.yandex.ru",
         path:"/api2/admin/domain/domains",

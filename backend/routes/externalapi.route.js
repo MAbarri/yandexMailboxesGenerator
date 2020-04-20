@@ -40,6 +40,13 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
     data: req.body.body,
     rejectUnauthorized: false
   };
+    if(req.body.paramstype == "querystring") {
+      _.each(_.keys(req.body.body), function(key, index){
+        if(index == 0) url+="?";
+        else url+="&";
+        url+=key+"="+req.body.body[key];
+      })
+    }
   options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
   console.log('options', options)
   axios(options)

@@ -12,6 +12,7 @@ import { environment } from './../../environments/environment';
 export class MailboxManagementComponent implements OnInit {
   loaded = false;
   gotDomainList = false;
+  mainDomainPDDForm: FormGroup;
   created = 0;
   yandexEmailsForm: FormGroup;
   yandexForm: FormGroup;
@@ -37,6 +38,9 @@ export class MailboxManagementComponent implements OnInit {
   }
 
   mainForm() {
+    this.mainDomainPDDForm = this.fb.group({
+      mainDomainPDD: ['', [Validators.required]]
+    })
   }
   getAllSubdomains(){
     this.apiService.getSubdomains().subscribe((data) => {
@@ -75,7 +79,7 @@ export class MailboxManagementComponent implements OnInit {
     }
   }
   getYandexDomains(){
-      this.apiService.getYandexDomains().subscribe(
+      this.apiService.getYandexDomains(this.mainDomainPDDForm.value.mainDomainPDD).subscribe(
         (res) => {
         this.gotDomainList = true;
           for (let i = 0; i < res.domains.length; i++) {

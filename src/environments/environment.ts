@@ -1,10 +1,7 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
   yandexClientID: "b8b47f25cb1b45718d36fc50cd392466",
+  yandexDefaultPdd: "KZA4W4X7Y4SGLUUH4IHAKFH5FSCWQ7UR5MOJJRJOJP2K7K3MQRQA",
   godaddy: {
     key: "3mM44Uah8XpP17_R3ptWCRM5ro7zQzenvDPkK",
     secret: "8PncTNdwrCGf35R5vVnWea"

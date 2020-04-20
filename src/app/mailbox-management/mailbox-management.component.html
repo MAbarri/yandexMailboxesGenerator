@@ -1,5 +1,19 @@
 <div class="container" *ngIf="loaded">
 
+  <div class="row" style="margin-top: 20px">
+    <div class="col-md-6">
+      <h4>Main Domain PDD <small>(required to get Domains Status)</small></h4>
+    </div>
+    <div class="col-md-6">
+      <form [formGroup]="mainDomainPDDForm">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <input type="text" class="form-control" id="domainname" formControlName="mainDomainPDD" placeholder="Main Domain PDD">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-8">
       <h2>Yandex Users Setup</h2>

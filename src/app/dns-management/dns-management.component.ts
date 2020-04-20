@@ -12,6 +12,7 @@ import { environment } from './../../environments/environment';
 export class DnsManagementComponent implements OnInit {
   submitted = false;
   addedRecordSuccess= false;
+  mainDomainPDDForm: FormGroup;
   generatedsnform: FormGroup;
   yandexEmailsForm: FormGroup;
   manualSubdomainForm: FormGroup;
@@ -36,6 +37,9 @@ export class DnsManagementComponent implements OnInit {
   }
 
   mainForm() {
+    this.mainDomainPDDForm = this.fb.group({
+      mainDomainPDD: ['', [Validators.required]]
+    })
     this.generatedsnform = this.fb.group({
       domain: ['', [Validators.required]],
       subdomainLevels: ['', [Validators.required]],
@@ -58,7 +62,7 @@ export class DnsManagementComponent implements OnInit {
         let alreadyCreated = true
         while (alreadyCreated) {
           let newsubdomain =this.makeid(5)+".";
-          for (let j = 0; j < this.generatedsnform.value.subdomainLevels; j++) {
+          for (let j = 1; j < this.generatedsnform.value.subdomainLevels; j++) {
             newsubdomain +=this.makeid(5)+".";
           }
           newsubdomain+=this.generatedsnform.value.domain;
@@ -170,7 +174,7 @@ export class DnsManagementComponent implements OnInit {
     }
   }
   getYandexDomains(){
-      this.apiService.getYandexDomains().subscribe(
+      this.apiService.getYandexDomains(this.mainDomainPDDForm.value.mainDomainPDD).subscribe(
         (res) => {
         this.yandexSetup = true;
           console.log('res!', res)
@@ -245,6 +249,16 @@ export class DnsManagementComponent implements OnInit {
     }
     deleteAttachment(index) {
       this.files.splice(index, 1)
+    }
+    createSubdomainsOrganizations(){
+      for (let i = 0; i < this.generatedSubdomains.length; i++) {
+          this.apiService.createSubdomainsOrganizations(this.generatedSubdomains[i], this.mainDomainPDDForm.value.mainDomainPDD).subscribe(
+            (res) => {
+              console.log('Employee successfully created!')
+            }, (error) => {
+              console.log(error);
+            });
+      }
     }
 
 }
