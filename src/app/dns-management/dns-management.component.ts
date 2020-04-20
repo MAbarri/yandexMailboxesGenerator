@@ -98,12 +98,12 @@ export class DnsManagementComponent implements OnInit {
 
   validateDomainsSubmit(){
     let godaddydata = []
-
+    let main_domain;
     for (let i = 0; i < this.generatedSubdomains.length; i++) {
       if(this.validateDomainsForm.value[this.generatedSubdomains[i]])
       var str = this.generatedSubdomains[i];
       var arry = str.split(".");
-      var actualdomain = arry[arry.length - 1] + arry[arry.length - 2];
+      var actualdomain = arry[arry.length - 2] + arry[arry.length - 1];
 
         godaddydata.push({
           "data": "yandex-verification: "+this.validateDomainsForm.value[this.generatedSubdomains[i]],
@@ -116,9 +116,10 @@ export class DnsManagementComponent implements OnInit {
           "type": "MX",
           "priority": 10
         })
+        main_domain = arry[arry.length - 2] +"."+ arry[arry.length - 1];
     }
     console.log('godaddydata', godaddydata)
-    this.apiService.persisteGoDaddy(this.generatedsnform.value.domain, godaddydata).subscribe(
+    this.apiService.persisteGoDaddy(main_domain, godaddydata).subscribe(
       (res) => {
         if(res == "") this.addedRecordSuccess = true;
         this.persisteSubdomainsInDatabse();

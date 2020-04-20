@@ -62,7 +62,7 @@
     <div class="col-md-12" style="margin-top: 20px" *ngIf="this.created">
       <p>Progress</p>
       <div class="progress">
-        <div class="progress-bar bg-success" [ngStyle]="{'width': (created/10)+'%'}">{{created}}</div>
+        <div class="progress-bar bg-success" [ngStyle]="{'width': ((created/1yandexEmailsForm.value.mailboxesCount)*100)+'%'}">{{created}}</div>
       </div>
     </div>
   </div>
