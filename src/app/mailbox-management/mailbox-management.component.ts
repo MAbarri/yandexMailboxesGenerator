@@ -29,7 +29,7 @@ export class MailboxManagementComponent implements OnInit {
     private ngZone: NgZone,
     private apiService: ApiService) {
       this.getAllSubdomains();
-      // this.mainForm();
+      this.mainForm();
     }
 
   ngOnInit() {
