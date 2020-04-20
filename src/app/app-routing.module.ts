@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { MailboxManagementComponent } from './mailbox-management/mailbox-management.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '', pathMatch: 'full', redirectTo: 'dns-management' },
   // { path: 'create-employee', component: EmployeeCreateComponent },
   // { path: 'edit-employee/:id', component: EmployeeEditComponent },
   // { path: 'employees-list', component: EmployeeListComponent },

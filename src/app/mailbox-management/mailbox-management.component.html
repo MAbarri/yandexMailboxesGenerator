@@ -15,17 +15,34 @@
           <div class="row"  style="max-height: 200px; overflow-y: scroll;">
             <div class="col-md-12" *ngFor="let subdomain of generatedSubdomains; let i = index">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <p>PDD Key for : {{subdomain}}</p>
                 </div>
-                <div class="col-md-4" *ngIf="true || domainsStatus[subdomain] && !domainsStatus[subdomain].isverified">
-                  <input type="text" class="form-control" id="subdomaincount" formControlName="{{subdomain}}" placeholder="PDD Tokens">
+                <div class="col-md-6" *ngIf="true || domainsStatus[subdomain] && !domainsStatus[subdomain].isverified">
+                  <input type="text" class="form-control" id="subdomaincount" name="{{subdomain}}" [formControlName]="subdomain" placeholder="PDD Tokens">
+                </div>
+                <div class="col-md-2 text-right">
+                  <p style="color: grey" *ngIf="!gotDomainList && !domainsStatus[subdomain]">No Data</p>
+                  <p style="color: red" *ngIf="gotDomainList && !domainsStatus[subdomain]">Not Created Yet</p>
+                  <p style="color: green" *ngIf="domainsStatus[subdomain] && domainsStatus[subdomain].isverified">{{domainsStatus[subdomain].isverified}}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-            <button *ngIf="generatedSubdomains && generatedSubdomains.length" type="submit" class="btn btn-primary">Create 1000 Emails</button>
+        <div class="col-md-12" style="margin-top: 20px; margin-right: 20px">
+          <div class="row">
+            <div class="col-md-4">
+              <input type="number" class="form-control" id="mailboxesCount" name="mailboxesCount" formControlName="mailboxesCount" placeholder="Mailboxes Count">
+            </div>
+            <div class="col-md-4">
+              <button *ngIf="generatedSubdomains && generatedSubdomains.length" type="submit" class="btn btn-primary">Create Emails</button>
+            </div>
+            <div class="col-md-4">
+              <button style="float: right;" (click)="getYandexDomains()" type="button" class="btn btn-primary">Refresh Status</button>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
     <div class="col-md-12" style="margin-top: 20px" *ngIf="this.created">

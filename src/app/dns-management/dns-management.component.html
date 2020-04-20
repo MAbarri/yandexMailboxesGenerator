@@ -8,11 +8,15 @@
     <div class="col-md-12">
       <form [formGroup]="generatedsnform" (ngSubmit)="generateDNS()">
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="domainname">Please fill the root Domain Name</label>
+          <div class="form-group col-md-4">
+            <label for="domainname" style="margin-bottom: 2em;">Please fill the root Domain Name</label>
             <input type="text" class="form-control" id="domainname" formControlName="domain" placeholder="Root Domain">
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
+            <label for="subdomaincount">Enter the number of Levels you wanna generate</label>
+            <input type="number" class="form-control" id="subdomainLevels" formControlName="subdomainLevels" placeholder="Subdomains Levels">
+          </div>
+          <div class="form-group col-md-4">
             <label for="subdomaincount">Enter the number of subdomains you wanna generate</label>
             <input type="number" class="form-control" id="subdomaincount" formControlName="subdomainCount" placeholder="Subdomains Count">
           </div>
@@ -30,16 +34,25 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="domainname">Fill subdomain name</label>
-            <input type="text" class="form-control" id="domainname" formControlName="manualSubdomain">
+            <input type="text" class="form-control" id="domainname" formControlName="manualSubdomain" placeholder="Subdomain Name">
+          </div>
+          <div class="col-md-6 text-right">
+            <button type="submit" class="btn btn-primary">Add Subdomain</button>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Add Subdomain</button>
       </form>
     </div>
   </div>
   <div class="row" *ngIf="generatedSubdomains && generatedSubdomains.length" style="margin: 20px -20px">
     <form class="col-md-12" style="margin-bottom: 20px" [formGroup]="validateDomainsForm" (ngSubmit)="validateDomainsSubmit()">
-      <h5>Generated Domains ({{generatedSubdomains.length}})</h5>
+      <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-8">
+          <h2>Generated Domains ({{generatedSubdomains.length}})</h2>
+        </div>
+        <div class="col-md-4 text-right">
+          <button type="button" (click)="exportSubdomains()" class="btn btn-primary">Export Domains</button>
+        </div>
+      </div>
       <div class="row" style="max-height: 200px; overflow-y: scroll;">
         <div class="col-md-12" *ngFor="let subdomain of generatedSubdomains; let i = index">
           <div class="row">
@@ -50,11 +63,6 @@
               <div class="col-md-4" *ngIf="true || domainsStatus[subdomain] && !domainsStatus[subdomain].isverified">
                 <input type="text" class="form-control" id="subdomaincount" formControlName="{{subdomain}}" placeholder="Yandex TXT Record">
               </div>
-              <div class="col-md-2">
-                <p style="color: grey" *ngIf="!domainsStatus[subdomain]">No Data</p>
-                <p style="color: red" *ngIf="domainsStatus[subdomain] && !domainsStatus[subdomain].isverified">Not Verified</p>
-                <p style="color: green" *ngIf="domainsStatus[subdomain] && domainsStatus[subdomain].isverified">Verified</p>
-              </div>
             </div>
           </div>
       </div>
@@ -62,33 +70,26 @@
         <div class="col-md-6">
           <button type="submit" class="btn btn-primary">Verify Domains With Tokens & Set MX Records</button>
         </div>
-        <div class="col-md-6">
-          <button style="float: right;" (click)="getYandexDomains()" type="button" class="btn btn-primary">Refresh Status</button>
-        </div>
       </div>
       <p *ngIf="addedRecordSuccess" style="color: green">added records successfully</p>
     </form>
   </div>
-  <!-- <div class="row" *ngIf="emailsSetup">
+  <div class="row">
     <div class="col-md-12">
-      <h2>Yandex Users Setup</h2>
-      <p>You can get PDD Token for each created domain by <a href="https://pddimp.yandex.ru/api2/admin/get_token" target="_blank">Clicking here</a></p>
-      <p>please fill PDD Tokens for created Subdomains in the inputs below</p>
+      <h4>Import Verification File</h4>
     </div>
     <div class="col-md-12">
-      <form class="row" style="max-height: 200px; overflow-y: scroll;" [formGroup]="yandexEmailsForm" (ngSubmit)="yandexEmailsSubmit()">
-          <div class="col-md-12" *ngFor="let subdomain of generatedSubdomains; let i = index">
-            <div class="row">
-              <div class="col-md-6">
-                <p>PDD Key for : {{subdomain}}</p>
-                </div>
-                <div class="col-md-4" *ngIf="true || domainsStatus[subdomain] && !domainsStatus[subdomain].isverified">
-                  <input type="text" class="form-control" id="subdomaincount" formControlName="{{subdomain}}" placeholder="PDD Tokens">
-                </div>
-              </div>
-            </div>
-        <button type="submit" class="btn btn-primary">Create 1000 Emails</button>
-      </form>
+      <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+        <input hidden type="file" #fileInput (change)="uploadFile($event.srcElement.files[0])">
+      </div>
+      <div  class="files-list" *ngFor="let file of files;let i=index">
+        <p>{{ file }}</p>
+        <button class="delete-file" (click)="deleteAttachment(i)">
+          <img src="../../assets/Recycle_Bin_Full.png">
+        </button>
+      </div>
     </div>
-  </div> -->
+  </div>
+
+
 </div>

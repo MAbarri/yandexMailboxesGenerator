@@ -48,11 +48,27 @@ subdomainRoute.route('/exportExistingUsers').get((req, res) => {
               throw new Error(err);
           }
           console.log('Success!');
-          const file = `${__dirname}/test-data.csv`;
+          const file = `${__dirname}/mailboxes-data.csv`;
           res.download(file); // Set disposition and send it.
         });
     }
   })
+})
+// Get All Subdomains
+subdomainRoute.route('/exportSubdomains').post((req, res) => {
+  console.log('exportSubdomains')
+  writeFile('./routes/subdomains-data.json', JSON.stringify(req.body.data), (err) => {
+      if(err) {
+          console.log(err); // Do something to handle the error or just throw it
+          throw new Error(err);
+      }
+      res.json("success")
+    });
+})
+subdomainRoute.route('/downloadExportedSubdomains').get((req, res) => {
+  console.log('exportSubdomains')
+  const file = `${__dirname}/subdomains-data.json`;
+  res.download(file); // Set disposition and send it.
 })
 // Get All Subdomains
 subdomainRoute.route('/subdomain/').get((req, res) => {

@@ -11,6 +11,7 @@ import { environment } from './../../environments/environment';
 })
 export class MailboxManagementComponent implements OnInit {
   loaded = false;
+  gotDomainList = false;
   created = 0;
   yandexEmailsForm: FormGroup;
   yandexForm: FormGroup;
@@ -50,6 +51,7 @@ export class MailboxManagementComponent implements OnInit {
      this.generatedSubdomains.forEach(domain_input=>{
        group[domain_input]=new FormControl('');
      })
+     group['mailboxesCount']= new FormControl('');
      this.yandexEmailsForm = new FormGroup(group);
      this.loaded = true;
     })
@@ -59,7 +61,7 @@ export class MailboxManagementComponent implements OnInit {
       if(this.yandexEmailsForm.value[this.generatedSubdomains[i]]) {
         let requestData = {pddToken : this.yandexEmailsForm.value[this.generatedSubdomains[i]], domain: this.generatedSubdomains[i]}
         console.log('requestData', requestData)
-        for (let i = 0; i < 1000; i++) {
+        for (let i = 0; i < this.yandexEmailsForm.value.mailboxesCount; i++) {
 
           this.apiService.createYandexDomainEmails(requestData).subscribe(
             (res) => {
@@ -72,12 +74,16 @@ export class MailboxManagementComponent implements OnInit {
       }
     }
   }
-  // downloadFile(data: any) {
-  //   const blob = new Blob([data], { type: 'text/csv' });
-  //   const url= window.URL.createObjectURL(blob);
-  //   console.log("url", url)
-  //   window.open(url);
-  // }
+  getYandexDomains(){
+      this.apiService.getYandexDomains().subscribe(
+        (res) => {
+        this.gotDomainList = true;
+          for (let i = 0; i < res.domains.length; i++) {
+              this.domainsStatus[res.domains[i].name] = {isverified: res.domains[i].stage};
+          }
+        }, (error) => {
+        });
+  }
   exportExistingUsers(){
     this.apiService.exportExistingUsers();
   }

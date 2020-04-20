@@ -16,10 +16,11 @@ export class DnsManagementComponent implements OnInit {
   yandexEmailsForm: FormGroup;
   manualSubdomainForm: FormGroup;
   validateDomainsForm: FormGroup;
-  generatedSubdomains:any = [];
+  generatedSubdomains = [];
   yandexSetup:any;
   emailsSetup:any;
   domainsStatus:any;
+  files: any = [];
 
   constructor(
     public fb: FormBuilder,
@@ -37,6 +38,7 @@ export class DnsManagementComponent implements OnInit {
   mainForm() {
     this.generatedsnform = this.fb.group({
       domain: ['', [Validators.required]],
+      subdomainLevels: ['', [Validators.required]],
       subdomainCount: ['', [Validators.required]]
     })
     this.manualSubdomainForm = this.fb.group({
@@ -55,7 +57,11 @@ export class DnsManagementComponent implements OnInit {
       for (let i = 0; i < this.generatedsnform.value.subdomainCount; i++) {
         let alreadyCreated = true
         while (alreadyCreated) {
-          let newsubdomain =this.makeid(5)+"."+this.generatedsnform.value.domain
+          let newsubdomain =this.makeid(5)+".";
+          for (let j = 0; j < this.generatedsnform.value.subdomainLevels; j++) {
+            newsubdomain +=this.makeid(5)+".";
+          }
+          newsubdomain+=this.generatedsnform.value.domain;
           alreadyCreated = this.generatedSubdomains.indexOf(newsubdomain) != -1;
           if(!alreadyCreated) {
             this.generatedSubdomains.push(newsubdomain)
@@ -69,6 +75,7 @@ export class DnsManagementComponent implements OnInit {
       group[domain_input]=new FormControl('');
     })
     this.validateDomainsForm = new FormGroup(group);
+    console.log('this.validateDomainsForm.value', this.validateDomainsForm.value)
   }
   addManuallySubdomain() {
     this.submitted = true;
@@ -178,6 +185,18 @@ export class DnsManagementComponent implements OnInit {
   persisteInNameCheap(){
     console.log('persisting in name cheap')
   }
+  exportSubdomains(){
+    let exportData = [];
+    for (let i = 0; i < this.generatedSubdomains.length; i++) {
+        exportData.push({domain: this.generatedSubdomains[i], pdd: ""});
+    }
+    this.apiService.exportSubdomains(exportData).subscribe(
+      (res) => {
+        this.apiService.downloadExportedSubdomains();
+      }, (error) => {
+        console.log(error);
+      });
+  }
   makeid(length) {
      var result           = '';
      var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789'
@@ -188,5 +207,44 @@ export class DnsManagementComponent implements OnInit {
      return result
   }
 
+    uploadFile(file) {
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = (evt: any) => {
+            let importedJson = JSON.parse(evt.target["result"])
+            console.log('importedJson', importedJson)
+            if(!this.generatedSubdomains) this.generatedSubdomains = [];
+            if(!this.validateDomainsForm) {
+              let group={}
+              this.validateDomainsForm = new FormGroup(group);
+            }
+            for (let i = 0; i < importedJson.length; i++) {
+                if(this.generatedSubdomains.indexOf(importedJson[i].domain) == -1) {
+                  this.generatedSubdomains.push(importedJson[i].domain);
+                }
+            }
+            console.log('this.generatedSubdomains', this.generatedSubdomains)
+            let group={}
+            this.generatedSubdomains.forEach(domain_input=>{
+              group[domain_input]=new FormControl('');
+            })
+            this.validateDomainsForm = new FormGroup(group);
+
+            for (let i = 0; i < importedJson.length; i++) {
+                this.validateDomainsForm.controls[importedJson[i].domain].setValue(importedJson[i].pdd);
+                // this.validateDomainsForm.value[importedJson[i].domain] = importedJson[i].pdd;
+            }
+            console.log('this.validateDomainsForm.value', this.validateDomainsForm.value)
+        }
+        reader.onerror = function (evt) {
+            console.log('error reading file');
+        }
+    }
+      console.log('this.files', this.files)
+    }
+    deleteAttachment(index) {
+      this.files.splice(index, 1)
+    }
 
 }

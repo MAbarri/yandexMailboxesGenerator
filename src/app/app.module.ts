@@ -16,6 +16,8 @@ import { DnsManagementComponent } from './dns-management/dns-management.componen
 import { LoginComponent } from './login/login.component';
 import { MailboxManagementComponent } from './mailbox-management/mailbox-management.component';
 
+import { DragDropDirective } from './directives/drag-drop.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,8 @@ import { MailboxManagementComponent } from './mailbox-management/mailbox-managem
     EmployeeEditComponent,
     DnsManagementComponent,
     LoginComponent,
-    MailboxManagementComponent
+    MailboxManagementComponent,
+    DragDropDirective
   ],
   imports: [
     BrowserModule,

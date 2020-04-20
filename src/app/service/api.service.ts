@@ -83,10 +83,10 @@ export class ApiService {
 
     let url = `${this.baseUri}makeExternalCall`;
     // let url = `${this.yandexBaseUri}domains/`;
-    let requestheaders = { 'Content-Type': 'application/json', 'Authorization': "OAuth "+localStorage.getItem("yandexClientCode"), "X-Org-ID": environment.yandexClientID }
+    let requestheaders = { 'Content-Type': 'application/json', 'PddToken': "KZA4W4X7Y4SGLUUH4IHAKFH5FSCWQ7UR5MOJJRJOJP2K7K3MQRQA"}
     let requestbody = {
-        host:"api.directory.yandex.net",
-        path:"/v6/domains",
+        host:"pddimp.yandex.ru",
+        path:"/api2/admin/domain/domains",
         method:"GET",
         headers:requestheaders,
         body:undefined
@@ -104,6 +104,17 @@ export class ApiService {
     // Get all subdomains
     exportExistingUsers() {
       window.open(`${this.baseUri}exportExistingUsers`)
+    }
+    downloadExportedSubdomains() {
+      window.open(`${this.baseUri}downloadExportedSubdomains`)
+    }
+    // Get all subdomains
+    exportSubdomains(data) {
+      let url = `${this.baseUri}exportSubdomains`;
+      return this.http.post(url, {data: data})
+        .pipe(
+          catchError(this.errorMgmt)
+        )
     }
   // Create
   createMultipleSubdomain(data): Observable<any> {
