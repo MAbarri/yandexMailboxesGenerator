@@ -101,14 +101,18 @@ export class DnsManagementComponent implements OnInit {
 
     for (let i = 0; i < this.generatedSubdomains.length; i++) {
       if(this.validateDomainsForm.value[this.generatedSubdomains[i]])
+      var str = this.generatedSubdomains[i];
+      var arry = str.split(".");
+      var actualdomain = arry[arry.length - 1] + arry[arry.length - 2];
+
         godaddydata.push({
           "data": "yandex-verification: "+this.validateDomainsForm.value[this.generatedSubdomains[i]],
-          "name": this.generatedSubdomains[i].substring(0, 5),
+          "name": str.substring(0, str.length - actualdomain.length - 2),
           "type": "TXT"
         })
         godaddydata.push({
           "data": "mx.yandex.net",
-          "name": this.generatedSubdomains[i].substring(0, 5),
+          "name": str.substring(0, str.length - actualdomain.length - 2),
           "type": "MX",
           "priority": 10
         })
