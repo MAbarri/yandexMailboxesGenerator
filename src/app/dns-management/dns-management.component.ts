@@ -107,12 +107,12 @@ export class DnsManagementComponent implements OnInit {
 
         godaddydata.push({
           "data": "yandex-verification: "+this.validateDomainsForm.value[this.generatedSubdomains[i]],
-          "name": str.substring(0, str.length - actualdomain.length - 2),
+          "name": str.substring(0, str.length - actualdomain.length - 1),
           "type": "TXT"
         })
         godaddydata.push({
           "data": "mx.yandex.net",
-          "name": str.substring(0, str.length - actualdomain.length - 2),
+          "name": str.substring(0, str.length - actualdomain.length - 1),
           "type": "MX",
           "priority": 10
         })
