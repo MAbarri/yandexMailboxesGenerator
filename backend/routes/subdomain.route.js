@@ -42,7 +42,7 @@ subdomainRoute.route('/exportExistingUsers').get((req, res) => {
       const csvData = csvjson.toCSV(emails, {
           headers: 'key'
       });
-      writeFile('./routes/test-data.csv', csvData, (err) => {
+      writeFile('./routes/mailboxes-data.csv', csvData, (err) => {
           if(err) {
               console.log(err); // Do something to handle the error or just throw it
               throw new Error(err);

@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>App Settings</h1>
+      <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="domainname">GoDaddy Key</label>
+              <input type="text" class="form-control" id="domainname" formControlName="apikey">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="domainname">GoDaddy Secret</label>
+              <input type="text" class="form-control" id="domainname" formControlName="apisecret">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Settins</button>
+      </form>
+    </div>
+  </div>
+</div>

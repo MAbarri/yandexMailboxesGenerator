@@ -14,7 +14,7 @@ export class ApiService {
   goDaddyBaseUri:string = '/v1/';
   yandexBaseUri:string = '/v6/';
   yandexEmailBaseUri:string = '/api2/';
-  headers = new HttpHeaders().set("x-debug", "true").set('Access-Control-Allow-Origin', '*').set('Content-Type', 'application/json').set('Authorization', "sso-key "+environment.godaddy.key+':'+environment.godaddy.secret);
+  headers = new HttpHeaders().set("x-debug", "true").set('Access-Control-Allow-Origin', '*').set('Content-Type', 'application/json').set('Authorization', "sso-key "+localStorage.getItem("godaddyKey")+':'+localStorage.getItem("godaddySecret"));
   constructor(private http: HttpClient) { }
 
   // Create
@@ -22,7 +22,7 @@ export class ApiService {
 
     let url = `${this.baseUri}makeExternalCall`;
     // let url = `${this.yandexBaseUri}domains/`;
-    let requestheaders = { 'Content-Type': 'application/json', 'Authorization': "sso-key "+environment.godaddy.key+':'+environment.godaddy.secret}
+    let requestheaders = { 'Content-Type': 'application/json', 'Authorization': "sso-key "+localStorage.getItem("godaddyKey")+':'+localStorage.getItem("godaddySecret")}
     let requestbody = {
         host:"api.godaddy.com",
         path:`${this.goDaddyBaseUri}domains/`+domain+`/records`,

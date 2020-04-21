@@ -6,6 +6,7 @@ import { EmployeeListComponent } from './components/employee-list/employee-list.
 import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
 import { DnsManagementComponent } from './dns-management/dns-management.component';
 import { LoginComponent } from './login/login.component';
+import { SettingsComponent } from './settings/settings.component';
 import { MailboxManagementComponent } from './mailbox-management/mailbox-management.component';
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   // { path: 'employees-list', component: EmployeeListComponent },
   { path: 'dns-management', component: DnsManagementComponent },
   { path: 'mailbox-management', component: MailboxManagementComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'settings', component: SettingsComponent }
 ];
 
 @NgModule({
