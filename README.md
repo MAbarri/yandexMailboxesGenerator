@@ -1,10 +1,6 @@
-# mean-stack-angular-7-crud-app-example
-A step by step  MEAN Stack Tutorial from which you will learn to build Angular 7 CRUD App with Bootstrap 4, MongoDB, NodeJS and Express JS from scratch.
+# Yandex Mailboxes Generator
 
-This project was built with Angular CLI version 7.2.3.
-
-Step by step article on [MEAN Stack Tutorial – Angular 7 CRUD App with Bootstrap 4
-](https://www.positronx.io/mean-stack-tutorial-angular-7-crud-bootstrap/)
+This project was built with MEAN Angular CLI 7,
 
 ## How to run the app?
 - Run `npm install` to install required dependencies.
@@ -18,22 +14,68 @@ Step by step article on [MEAN Stack Tutorial – Angular 7 CRUD App with Bootstr
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Production Depoilement:
+Prepare environement:
+- install NODE JS
+- install MongoDB
+- install Angular Client
+- install PM2 & NGINX for WEB Serving
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+one all done, make sure you have installed npm packages:
+- in root folder: `npm install`
+- in backend folder: `npm install`
+build for production :
+- run `npm build --prod`
 
-## Running end-to-end tests
+Everything Done, with no problem ? great now NGINX Config and you all set:
+- Update default config file in : /etc/nginx/sites-available, as below
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```
+server {
+	root /var/www/html/yandexMailboxesGenerator/dist/mean-stack-crud-app;
+	index index.html index.htm index.nginx-debian.html;
+	server_name generatengine.online www.generatengine.online;
+	location / {
+		try_files $uri $uri/ /index.html;
+	}
+	location /backendapi {
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header Host $http_host;
+		proxy_set_header X-NginX-Proxy true;
+		proxy_pass http://api_node_js;
+		proxy_redirect off;
+	}
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/generatengine.online/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/generatengine.online/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
 
-## Further help
+server {
+    if ($host = www.generatengine.online) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+    if ($host = generatengine.online) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	server_name generatengine.online www.generatengine.online;
+    return 404; # managed by Certbot
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+}
+```
+
+don't forget to update the file to your configuration:
+- set `/var/www/html/yandexMailboxesGenerator` to your project path
+- set domain name to yours
+
+
+That's it it's done and working !!
