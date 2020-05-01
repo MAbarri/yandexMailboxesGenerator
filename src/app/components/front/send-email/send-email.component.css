@@ -15,16 +15,16 @@
   background-color: #9ecbec !important;
   opacity: 0.8;
 }
-
+.file-list-container {
+  max-height: 140px;
+  overflow-y: scroll;
+}
 .files-list {
   display: flex;
   justify-content: space-between;
   width: 80%;
   margin: 10px auto;
   background: #ffffff;
-  border: 1px dashed;
-  border-radius: 12px;
-  padding: 5px;
   color: #1c8adb;
 }
 
@@ -33,8 +33,10 @@
   border: none;
   cursor: pointer;
 }
-.files-list .delete-file img{
-  width:30px;
+.files-list img{
+  width:20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 .md-top{

@@ -21,9 +21,9 @@ module.exports = {
 
     smtpTransport.sendMail(mailOptions, function(error, response) {
       if (error) {
-        cb(error);
+        cb({mailOptions: mailOptions, error: error});
       } else {
-        cb(response);
+        cb({mailOptions: mailOptions, response: response});
       }
     });
   }

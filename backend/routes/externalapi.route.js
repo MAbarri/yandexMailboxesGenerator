@@ -115,18 +115,19 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
   var counter = 0;
   async.mapSeries(originalEmails, function(email, callbackSenders) {
     if(counter<receiversEmails.length) {
-      async.mapSeries(receiversEmails.splice(counter, 10), function(receiver, callback) {
+      async.mapSeries(receiversEmails.splice(counter, 4), function(receiver, callback) {
         nodeMailer.sendMail(email, receiver, subject, template,  function(status){
           callback(null, status);
         })
       }, function(err, responses) {
-        counter+=10;
+        counter+=4;
         callbackSenders(null, responses);
       });
     } else
     callbackSenders();
 
   }, function(err, allResponses) {
+    allResponses = _.flatten(_.filter(allResponses, function(item){return !!item}))
     res.json({responses: allResponses});
   });
 

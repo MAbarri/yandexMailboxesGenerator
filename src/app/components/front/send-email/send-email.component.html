@@ -23,11 +23,11 @@
             <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
               <input hidden type="file" #fileInput (change)="uploadFile($event.srcElement.files[0])">
             </div>
-            <div  class="files-list" *ngFor="let file of senders;let i=index">
-              <p>{{ file.login }}</p>
-              <button class="delete-file" (click)="deleteAttachment(i)">
-                <img src="../../assets/Recycle_Bin_Full.png">
-              </button>
+            <div class="file-list-container">
+              <div  class="files-list" *ngFor="let file of senders;let i=index">
+                {{ file.login }}
+                <img src="../../assets/Recycle_Bin_Full.png" (click)="deleteAttachment(i)">
+              </div>
             </div>
           </div>
         </div>
@@ -39,11 +39,11 @@
             <div class="uploadfilecontainer" (click)="fileInputReceiver.click()" appDragDrop (onFileDropped)="uploadFilereceivers($event)">
               <input hidden type="file" #fileInputReceiver (change)="uploadFilereceivers($event.srcElement.files[0])">
             </div>
-            <div  class="files-list" *ngFor="let file of receivers;let i=index">
-              <p>{{ file }}</p>
-              <button class="delete-file" (click)="deleteAttachmentreceivers(i)">
-                <img src="../../assets/Recycle_Bin_Full.png">
-              </button>
+            <div class="file-list-container">
+              <div  class="files-list" *ngFor="let file of receivers;let i=index">
+                {{ file }}
+                <img src="../../assets/Recycle_Bin_Full.png" (click)="deleteAttachment(i)">
+              </div>
             </div>
           </div>
         </div>
