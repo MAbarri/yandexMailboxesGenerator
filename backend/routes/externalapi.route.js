@@ -1,7 +1,10 @@
 const express = require('express');
+const async = require('async');
+
+const nodeMailer = require('../helpers/mailer');
 const _ = require('underscore');
 const app = express();
-const subdomainRoute = express.Router();
+const ExternalApiRoute = express.Router();
 const https = require('https');
 const axios = require('axios');
 var fs = require('fs');
@@ -10,7 +13,7 @@ const { Parser } = require('json2csv');
 let Subdomain = require('../models/Subdomain');
 
 // Add Subdomain
-subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
+ExternalApiRoute.route('/makeExternalCall').post((req, res, next) => {
   let originHost = JSON.parse(JSON.stringify(req.headers));
   // originHost.host = req.body.host;
   delete originHost.referer;
@@ -60,7 +63,7 @@ subdomainRoute.route('/makeExternalCall').post((req, res, next) => {
 
 });
 
-subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
+ExternalApiRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   let originHost = JSON.parse(JSON.stringify(req.headers));
   // originHost.host = req.body.host;
   delete originHost.referer;
@@ -104,6 +107,30 @@ subdomainRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   });
 
 });
+ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
+  let originalEmails = req.body.emails;
+  let receiversEmails = req.body.receivers;
+  let template = req.body.template;
+  let subject = req.body.subject;
+  var counter = 0;
+  async.mapSeries(originalEmails, function(email, callbackSenders) {
+    if(counter<receiversEmails.length) {
+      async.mapSeries(receiversEmails.splice(counter, 10), function(receiver, callback) {
+        nodeMailer.sendMail(email, receiver, subject, template,  function(status){
+          callback(null, status);
+        })
+      }, function(err, responses) {
+        counter+=10;
+        callbackSenders(null, responses);
+      });
+    } else
+    callbackSenders();
+
+  }, function(err, allResponses) {
+    res.json({responses: allResponses});
+  });
+
+});
 function makeid(length) {
    var result           = '';
    var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789'
@@ -113,4 +140,4 @@ function makeid(length) {
    }
    return result
 }
-module.exports = subdomainRoute;
+module.exports = ExternalApiRoute;
