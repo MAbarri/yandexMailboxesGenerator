@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ApiService } from './../service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -22,8 +23,10 @@ export class MailboxManagementComponent implements OnInit {
   yandexSetup:any;
   emailsSetup:any;
   domainsStatus:any;
+  closeResult:any;
 
   constructor(
+    private modalService: NgbModal,
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
@@ -101,4 +104,27 @@ export class MailboxManagementComponent implements OnInit {
      return result
   }
 
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+     if (reason === ModalDismissReasons.ESC) {
+       return 'by pressing ESC';
+     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+       return 'by clicking on a backdrop';
+     } else {
+       return `with: ${reason}`;
+     }
+   }
+   clearSubdomainData(subdomain){
+       this.apiService.deleteSubdomain(subdomain).subscribe(
+         (res) => {
+             this.getAllSubdomains();
+         }, (error) => {
+         });
+   }
 }
