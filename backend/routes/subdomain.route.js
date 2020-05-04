@@ -35,7 +35,7 @@ subdomainRoute.route('/exportExistingUsers').get((req, res) => {
     } else {
       let emails = [];
       _.each(data, function(item){
-        emails = _.union(emails, _.map(data, function(subdomain){ return _.map(_.filter(subdomain.emails, function(mail){ return mail.login && mail.password}), function(email){ return {login: email.login+"@"+item.name, password: email.password}})}));
+        emails=emails.concat( _.map(_.filter(item.emails, function(mail){ return mail.login && mail.password}), function(email){ return {login: email.login+"@"+item.name, password: email.password}}));
       })
       emails = _.flatten(emails);
       // console.log('emails', emails)
