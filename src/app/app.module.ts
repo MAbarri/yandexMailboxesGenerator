@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { EmployeeCreateComponent } from './components/employee-create/employee-c
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
 
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -19,6 +21,7 @@ import { MailboxManagementComponent } from './mailbox-management/mailbox-managem
 
 import { DragDropDirective } from './directives/drag-drop.directive';
 import { SettingsComponent } from './settings/settings.component';
+import { UsersManagementsComponent } from './users-managements/users-managements.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +33,15 @@ import { SettingsComponent } from './settings/settings.component';
     LoginComponent,
     MailboxManagementComponent,
     DragDropDirective,
-    SettingsComponent
+    SettingsComponent,
+    UsersManagementsComponent
   ],
   imports: [
     NgbModule,
+    NgSelectModule,
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule
   ],

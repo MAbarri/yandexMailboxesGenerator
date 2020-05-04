@@ -54,6 +54,33 @@ subdomainRoute.route('/exportExistingUsers').get((req, res) => {
     }
   })
 })
+subdomainRoute.route('/exportUsers/:id').get((req, res) => {
+  console.log('exportUsers', req.params.id)
+  Subdomain.find({_id: req.params.id}).lean().exec(function(err, data) {
+    if (err) {
+      return next(err)
+    } else {
+      let emails = [];
+      _.each(data, function(item){
+        emails=emails.concat( _.map(_.filter(item.emails, function(mail){ return mail.login && mail.password}), function(email){ return {login: email.login+"@"+item.name, password: email.password, firstname: '', lastname:'', birth_date:'', sex: ''}}));
+      })
+      emails = _.flatten(emails);
+      // console.log('emails', emails)
+      const csvData = csvjson.toCSV(emails, {
+          headers: 'key'
+      });
+      writeFile('./routes/users-data.csv', csvData, (err) => {
+          if(err) {
+              console.log(err); // Do something to handle the error or just throw it
+              throw new Error(err);
+          }
+          console.log('Success!');
+          const file = `${__dirname}/users-data.csv`;
+          res.download(file); // Set disposition and send it.
+        });
+    }
+  })
+})
 // Get All Subdomains
 subdomainRoute.route('/exportSubdomains').post((req, res) => {
   console.log('exportSubdomains')
