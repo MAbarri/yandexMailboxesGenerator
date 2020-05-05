@@ -115,9 +115,6 @@ subdomainRoute.route('/updateMultipleMailboxs').post((req, res, next) => {
 
   let mailData = JSON.parse(JSON.stringify(req.body.body));
 
-  mailData.login = makeid(6);
-  mailData.password = makeid(10);
-
   if(req.body.paramstype == "querystring") {
     _.each(_.keys(mailData), function(key, index){
       if(index == 0) url+="?";
@@ -126,7 +123,6 @@ subdomainRoute.route('/updateMultipleMailboxs').post((req, res, next) => {
     })
   }
 
-  createdMails.push({login: mailData.login, password: mailData.password});
   var options = {
     url: url,
     port: 80,
@@ -136,7 +132,6 @@ subdomainRoute.route('/updateMultipleMailboxs').post((req, res, next) => {
     rejectUnauthorized: false
   };
   options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
-  console.log('options', options)
   axios(options)
   .then(function (response) {
           console.log('response.data', response.data)

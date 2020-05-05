@@ -79,7 +79,7 @@ export class ApiService {
 
   }
   fillYandexDomainUserData(data): Observable<any> {
-      let url = `${this.baseUri}createMultipleMailboxs`;
+      let url = `${this.baseUri}updateMultipleMailboxs`;
       // let url = `${this.yandexBaseUri}domains/`;
       let requestheaders = { 'Content-Type': 'application/json', 'PddToken': data.pddToken}
       let requestbody = {
