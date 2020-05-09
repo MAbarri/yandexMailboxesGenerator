@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row md-top">
+    <div class="col-md-12">
+      <h3>Mailboxes additional Infos form</h3>
+    </div>
+    <div class="col-md-12">
+      <h5>Select Domain & fill PDD</h5>
+    </div>
+    <div class="col-md-4">
+      <ng-select [items]="subdomains"
+                 bindLabel="name"
+                 bindValue="_id"
+                 [(ngModel)]="selectedSubdomain">
+      </ng-select>
+    </div>
+    <div class="col-md-4 text-right">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <input type="text" class="form-control" id="domainname" [(ngModel)]="selectedSubdomainPDD" placeholder="Selected Domain PDD">
+          </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-right">
+      <button style="float: right;" (click)="exportUsers()" type="button" class="btn btn-primary">Export Existing Users</button>
+    </div>
+  </div>
+  <div class="row md-top">
+    <div class="col-md-12">
+
+      <div class="row md-top">
+        <div class="col-md-12">
+          <h4>Import Verification File</h4>
+        </div>
+        <div class="col-md-12">
+          <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+            <input hidden type="file" #fileInput (change)="uploadFile($event.srcElement.files[0])">
+          </div>
+          <div  class="files-list" *ngFor="let file of files;let i=index">
+            <p>{{ file }}</p>
+            <button class="delete-file" (click)="deleteAttachment(i)">
+              <img src="../../assets/Recycle_Bin_Full.png">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row md-top" *ngIf="this.created">
+        <div class="col-md-12" style="margin-top: 20px">
+          <p>Progress</p>
+          <div class="progress">
+            <div class="progress-bar bg-success" [ngStyle]="{'width': ((created/total)*100)+'%'}">{{Updated}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

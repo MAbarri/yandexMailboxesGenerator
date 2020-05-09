@@ -1,17 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
+// import { EmployeeCreateComponent } from './components/employee-create/employee-create.component';
+// import { EmployeeListComponent } from './components/employee-list/employee-list.component';
+// import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
+// import { SettingsComponent } from './settings/settings.component';
 import { ApiService } from './service/api.service';
-import { DragDropDirective } from './directives/drag-drop.directive';
 
 import { HomeComponent } from './home/home.component';
 
+import { DragDropDirective } from './directives/drag-drop.directive';
+
+
+import { UsersManagementsComponent } from './components/admin/users-managements/users-managements.component';
 import { EmployeeCreateComponent } from './components/admin/employee-create/employee-create.component';
 import { EmployeeListComponent } from './components/admin/employee-list/employee-list.component';
 import { EmployeeEditComponent } from './components/admin/employee-edit/employee-edit.component';
@@ -33,13 +42,17 @@ import { SendEmailComponent } from './components/front/send-email/send-email.com
     MailboxManagementComponent,
     DragDropDirective,
     SettingsComponent,
+    UsersManagementsComponent,
     DashboardComponent,
     HomeComponent,
     SendEmailComponent
   ],
   imports: [
+    NgbModule,
+    NgSelectModule,
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule
   ],

@@ -86,6 +86,25 @@ export class ApiService {
       )
 
   }
+  fillYandexDomainUserData(data): Observable<any> {
+      let url = `${this.baseUri}updateMultipleMailboxs`;
+      // let url = `${this.yandexBaseUri}domains/`;
+      let requestheaders = { 'Content-Type': 'application/json', 'PddToken': data.pddToken}
+      let requestbody = {
+        host:"pddimp.yandex.ru",
+        path:`${this.yandexEmailBaseUri}admin/email/edit`,
+        method:"POST",
+        headers:requestheaders,
+        body: data.content,
+        paramstype: "querystring"
+      }
+      console.log('requestbody', requestbody)
+      return this.http.post(url, requestbody)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+
+  }
   // Create
   createSubdomainsOrganizations(domain, pdd): Observable<any> {
       let url = `${this.baseUri}makeExternalCall`;
@@ -132,6 +151,9 @@ export class ApiService {
     // Get all subdomains
     exportExistingUsers() {
       window.open(`${this.baseUri}exportExistingUsers`)
+    }
+    exportUsers(domain) {
+      window.open(`${this.baseUri}exportUsers/${domain}`)
     }
     downloadExportedSubdomains() {
       window.open(`${this.baseUri}downloadExportedSubdomains`)

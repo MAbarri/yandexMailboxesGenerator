@@ -1,6 +1,11 @@
 <div class="container" *ngIf="loaded">
 
   <div class="row" style="margin-top: 20px">
+    <div class="col-md-12 text-right">
+      <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Clear Databse</button>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 20px">
     <div class="col-md-6">
       <h4>Main Domain PDD <small style="font-size: 50%;">(required to get Domains Status)</small></h4>
     </div>
@@ -67,3 +72,30 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Clear Database</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+              <h4>Domains</h4>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;" *ngFor="let subdomain of subdomains; let i = index">
+          <div class="col-md-6">
+            {{subdomain.name}}
+          </div>
+          <div class="col-md-6 text-right">
+            <button type="button" class="btn btn-outline-dark" (click)="clearSubdomainData(subdomain._id)">Clear Subdomain Data</button>
+          </div>
+        </div>
+      </div>
+  </div>
+</ng-template>

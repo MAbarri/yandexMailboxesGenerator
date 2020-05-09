@@ -107,6 +107,44 @@ ExternalApiRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   });
 
 });
+ExternalApiRoute.route('/updateMultipleMailboxs').post((req, res, next) => {
+  let originHost = JSON.parse(JSON.stringify(req.headers));
+  // originHost.host = req.body.host;
+  delete originHost.referer;
+  delete originHost.host;
+
+  let url = "https://"+req.body.host+req.body.path;
+  let createdMails = [];
+
+  let mailData = JSON.parse(JSON.stringify(req.body.body));
+
+  if(req.body.paramstype == "querystring") {
+    _.each(_.keys(mailData), function(key, index){
+      if(index == 0) url+="?";
+      else url+="&";
+      url+=key+"="+mailData[key];
+    })
+  }
+
+  var options = {
+    url: url,
+    port: 80,
+    method: req.body.method,
+    headers: req.body.headers,
+    data: mailData,
+    rejectUnauthorized: false
+  };
+  options.headers['User-Agent'] = 'curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5';
+  axios(options)
+  .then(function (response) {
+          console.log('response.data', response.data)
+          res.json({response: response.data});
+  })
+  .catch(function (error) {
+    res.json({error: error});
+  });
+
+});
 ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
   let originalEmails = req.body.emails;
   let receiversEmails = req.body.receivers;
