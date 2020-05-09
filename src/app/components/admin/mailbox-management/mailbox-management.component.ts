@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, NgZone } from '@angular/core';
-import { ApiService } from './../service/api.service';
+import { ApiService } from './../../../service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { environment } from './../../environments/environment';
+import { environment } from './../../../../environments/environment';
 
 @Component({
   selector: 'app-mailbox-management',

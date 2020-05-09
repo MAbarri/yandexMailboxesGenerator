@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, NgZone } from '@angular/core';
-import { ApiService } from './../service/api.service';
+import { ApiService } from './../../../service/api.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
-import { environment } from './../../environments/environment';
+import { environment } from './../../../../environments/environment';
 
 @Component({
   selector: 'app-dns-management',

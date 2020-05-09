@@ -45,6 +45,14 @@ export class ApiService {
         catchError(this.errorMgmt)
       )
   }
+  // checkAvailable
+  sendEmails(data): Observable<any> {
+    let url = `${this.baseUri}sendEmails`;
+    return this.http.post(url, data, {})
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
 
   // Create
   createYandexDomain(domain): Observable<any> {
