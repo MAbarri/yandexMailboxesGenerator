@@ -20,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { DragDropDirective } from './directives/drag-drop.directive';
 
 
+import { AdminComponent } from './components/admin/admin.component';
 import { UsersManagementsComponent } from './components/admin/users-managements/users-managements.component';
 import { EmployeeCreateComponent } from './components/admin/employee-create/employee-create.component';
 import { EmployeeListComponent } from './components/admin/employee-list/employee-list.component';
@@ -34,6 +35,7 @@ import { SendEmailComponent } from './components/front/send-email/send-email.com
 @NgModule({
   declarations: [
     AppComponent,
+    AdminComponent,
     EmployeeCreateComponent,
     EmployeeListComponent,
     EmployeeEditComponent,
