@@ -40,6 +40,7 @@ export class SendEmailComponent implements OnInit {
         this.sendMailResponses['login'] = _.filter(res.responses, function(item){ return item['status'] == "AUTHENTICATION"}).length;
         this.sendMailResponses['eula'] = _.filter(res.responses, function(item){ return item['status'] == "EULA"}).length;
         this.sendMailResponses['spam'] = _.filter(res.responses, function(item){ return item['status'] == "SPAM"}).length;
+        this.sendMailResponses['error'] = _.filter(res.responses, function(item){ return item['status'] == "UNKNOWN ERROR"}).length;
         console.log('this.sendMailResponses', this.sendMailResponses)
       }, (error) => {
       });

@@ -178,6 +178,10 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
         ret.status = 'SPAM';
       else if(res.response && res.response.response.indexOf("Ok") != -1)
         ret.status = "SUCCESS";
+      if(res.error && !ret.status) {
+        ret.status = "UNKNOWN ERROR";
+        ret.data = res.error;
+      }
       return ret;
     })
     res.json({responses: returnObject});
