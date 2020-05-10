@@ -3,7 +3,8 @@ let express = require('express'),
    mongoose = require('mongoose'),
    cors = require('cors'),
    bodyParser = require('body-parser'),
-   dbConfig = require('./database/db');
+   dbConfig = require('./database/db'),
+   timeout = require('connect-timeout'); //express v4
 
 // Connecting with mongo db
 mongoose.Promise = global.Promise;
@@ -35,6 +36,13 @@ const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
   console.log('Connected to port ' + port)
 })
+
+app.use(timeout(1200000));
+app.use(haltOnTimedout);
+
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) next();
+}
 
 // Find 404 and hand over to error handler
 app.use((req, res, next) => {
