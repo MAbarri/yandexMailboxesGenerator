@@ -168,6 +168,8 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
     allResponses = _.flatten(_.filter(allResponses, function(item){return !!item}))
     var returnObject = _.map(allResponses, function(res){
       var ret = {sender: res.mailOptions.from, client: res.mailOptions.to};
+      if(res.error)  ret.response = res.error.response;
+      if(res.response)  ret.response = res.response.response;
       if(res.error && res.error.response.indexOf('Please accept EULA first'))
         ret.status = 'EULA';
       else if(res.error && res.error.response.indexOf("Invalid user or password"))
