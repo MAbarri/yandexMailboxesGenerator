@@ -158,7 +158,7 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
           callback(null, status);
         })
       }, function(err, responses) {
-        counter+=4;
+        counter+=10;
         callbackSenders(null, responses);
       });
     } else
