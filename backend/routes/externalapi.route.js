@@ -153,7 +153,7 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
   var counter = 0;
   async.mapSeries(originalEmails, function(email, callbackSenders) {
     if(counter<receiversEmails.length) {
-      async.mapSeries(receiversEmails.splice(counter, 4), function(receiver, callback) {
+      async.mapSeries(receiversEmails.splice(counter, 10), function(receiver, callback) {
         nodeMailer.sendMail(email, receiver, subject, template,  function(status){
           callback(null, status);
         })
