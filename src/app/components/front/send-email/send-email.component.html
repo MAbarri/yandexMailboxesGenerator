@@ -51,5 +51,10 @@
     </form>
 
     </div>
+    <div *ngIf="sendFinished" class="col-md-12" style="margin-top:20px; margin-bottom:20px">
+      <div class="row">Success: {{sendMailResponses.success}}</div>
+      <div class="row">Login Issues: {{sendMailResponses.login}}</div>
+      <div class="row">Eula: {{sendMailResponses.eula}}</div>
+    </div>
   </div>
 </div>

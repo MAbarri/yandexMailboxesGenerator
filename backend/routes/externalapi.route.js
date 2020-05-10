@@ -166,7 +166,17 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
 
   }, function(err, allResponses) {
     allResponses = _.flatten(_.filter(allResponses, function(item){return !!item}))
-    res.json({responses: allResponses});
+    var returnObject = _.map(allResponses, function(res){
+      var ret = {sender: res.mailOptions.from, client: res.mailOptions.to};
+      if(res.error && res.error.response.indexOf('Please accept EULA first'))
+        ret.status = 'EULA';
+      if(res.error && res.error.response.indexOf("Invalid user or password"))
+        ret.status = 'AUTHENTICATION';
+      if(res.response && res.response.response.indexOf("Ok"))
+        ret.status = "SUCCESS";
+      return ret;
+    })
+    res.json({responses: returnObject});
   });
 
 });

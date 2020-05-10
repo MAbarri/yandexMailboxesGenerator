@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ApiService } from './../../../service/api.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-send-email',
@@ -12,6 +13,8 @@ export class SendEmailComponent implements OnInit {
   emailContentForm: FormGroup;
   senders: any = [];
   receivers: any = [];
+  sendMailResponses: any = {};
+  sendFinished: any = false;
 
   constructor(
     public fb: FormBuilder,
@@ -30,8 +33,13 @@ export class SendEmailComponent implements OnInit {
   }
   sendEmails() {
     this.apiService.sendEmails({subject: this.emailContentForm.value.subject, template: this.emailContentForm.value.emailTemplate, emails: this.senders, receivers: this.receivers}).subscribe(
-      (res) => {
-        console.log('res', res)
+      (res: any) => {
+        this.sendFinished = true;
+        this.sendMailResponses['responses'] = res.responses;
+        this.sendMailResponses['success'] = _.filter(res.responses, function(item){ return item['status'] == "SUCCESS"}).length;
+        this.sendMailResponses['login'] = _.filter(res.responses, function(item){ return item['status'] == "AUTHENTICATION"}).length;
+        this.sendMailResponses['eula'] = _.filter(res.responses, function(item){ return item['status'] == "EULA"}).length;
+        console.log('this.sendMailResponses', this.sendMailResponses)
       }, (error) => {
       });
   }
