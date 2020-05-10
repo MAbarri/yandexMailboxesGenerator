@@ -52,9 +52,10 @@
 
     </div>
     <div *ngIf="sendFinished" class="col-md-12" style="margin-top:20px; margin-bottom:20px">
-      <div class="row">Success: {{sendMailResponses.success}}</div>
-      <div class="row">Login Issues: {{sendMailResponses.login}}</div>
-      <div class="row">Eula: {{sendMailResponses.eula}}</div>
+      <div class="row" style="color: green">Success: {{sendMailResponses.success}}</div>
+      <div class="row" style="color: red">Login Issues: {{sendMailResponses.login}}</div>
+      <div class="row" style="color: red">Eula: {{sendMailResponses.eula}}</div>
+      <div class="row" style="color: red">Spam: {{sendMailResponses.spam}}</div>
     </div>
   </div>
 </div>

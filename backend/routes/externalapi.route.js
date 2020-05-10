@@ -174,6 +174,8 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
         ret.status = 'EULA';
       else if(res.error && res.error.response.indexOf("Invalid user or password") != -1)
         ret.status = 'AUTHENTICATION';
+      else if(res.error && res.error.response.indexOf("Message rejected under suspicion of SPAM") != -1)
+        ret.status = 'SPAM';
       else if(res.response && res.response.response.indexOf("Ok") != -1)
         ret.status = "SUCCESS";
       return ret;

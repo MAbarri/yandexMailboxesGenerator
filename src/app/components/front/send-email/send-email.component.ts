@@ -39,6 +39,7 @@ export class SendEmailComponent implements OnInit {
         this.sendMailResponses['success'] = _.filter(res.responses, function(item){ return item['status'] == "SUCCESS"}).length;
         this.sendMailResponses['login'] = _.filter(res.responses, function(item){ return item['status'] == "AUTHENTICATION"}).length;
         this.sendMailResponses['eula'] = _.filter(res.responses, function(item){ return item['status'] == "EULA"}).length;
+        this.sendMailResponses['spam'] = _.filter(res.responses, function(item){ return item['status'] == "SPAM"}).length;
         console.log('this.sendMailResponses', this.sendMailResponses)
       }, (error) => {
       });
