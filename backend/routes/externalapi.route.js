@@ -170,11 +170,11 @@ ExternalApiRoute.route('/sendEmails').post((req, res, next) => {
       var ret = {sender: res.mailOptions.from, client: res.mailOptions.to};
       if(res.error)  ret.response = res.error.response;
       if(res.response)  ret.response = res.response.response;
-      if(res.error && res.error.response.indexOf('Please accept EULA first'))
+      if(res.error && res.error.response.indexOf('Please accept EULA first') != -1)
         ret.status = 'EULA';
-      else if(res.error && res.error.response.indexOf("Invalid user or password"))
+      else if(res.error && res.error.response.indexOf("Invalid user or password") != -1)
         ret.status = 'AUTHENTICATION';
-      else if(res.response && res.response.response.indexOf("Ok"))
+      else if(res.response && res.response.response.indexOf("Ok") != -1)
         ret.status = "SUCCESS";
       return ret;
     })
