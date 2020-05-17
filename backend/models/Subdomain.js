@@ -13,7 +13,11 @@ let Subdomain = new Schema({
    },
    emails: [{
       login: String,
-      password: String
+      password: String,
+      iname: String,
+      fname: String,
+      birth_date: String,
+      sex: String
    }]
 }, {
    collection: 'subdomains'

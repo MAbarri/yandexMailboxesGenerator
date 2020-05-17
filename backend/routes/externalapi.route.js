@@ -9,6 +9,8 @@ const https = require('https');
 const axios = require('axios');
 var fs = require('fs');
 const { Parser } = require('json2csv');
+var faker = require('faker');
+faker.locale = "en";
 // Subdomain model
 let Subdomain = require('../models/Subdomain');
 
@@ -77,6 +79,12 @@ ExternalApiRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   mailData.login = makeid(6);
   mailData.password = makeid(10);
 
+  mailData.iname = faker.name.firstName();
+  mailData.fname = faker.name.lastName();
+  mailData.birth_date = faker.random.number({min:1979, max:2000})+"-"+faker.random.number({min:1, max:12})+"-"+faker.random.number({min:1, max:29});
+  mailData.sex = faker.random.number({min:0, max:1});
+
+
   if(req.body.paramstype == "querystring") {
     _.each(_.keys(mailData), function(key, index){
       if(index == 0) url+="?";
@@ -85,7 +93,7 @@ ExternalApiRoute.route('/createMultipleMailboxs').post((req, res, next) => {
     })
   }
 
-  createdMails.push({login: mailData.login, password: mailData.password});
+  createdMails.push({login: mailData.login, password: mailData.password, iname: mailData.iname, fname: mailData.fname, birth_date: mailData.birth_date, sex: mailData.sex});
   var options = {
     url: url,
     port: 80,
