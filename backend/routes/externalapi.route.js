@@ -115,6 +115,23 @@ ExternalApiRoute.route('/createMultipleMailboxs').post((req, res, next) => {
   });
 
 });
+ExternalApiRoute.route('/experimental').get((req, res, next) => {
+  Subdomain.find({}).exec(function(err, subdomains){
+    async.mapSeries(subdomains, function(subdomain, callbackSenders) {
+      _.each(subdomain.emails, function(email){
+        if(!email.iname) email.iname = faker.name.firstName();
+        if(!email.fname) email.fname = faker.name.lastName();
+        if(!email.birth_date) email.birth_date = faker.random.number({min:1979, max:2000})+"-"+faker.random.number({min:1, max:12})+"-"+faker.random.number({min:1, max:29});
+        if(!email.sex) email.sex = faker.random.number({min:0, max:1});
+      })
+      Subdomain.findOneAndUpdate({_id: subdomain._id}, subdomain).exec(function(){
+        callbackSenders();
+      })
+    }, function(err, allResponses) {
+      res.json({response: "success"});
+    });
+  })
+});
 ExternalApiRoute.route('/updateMultipleMailboxs').post((req, res, next) => {
   let originHost = JSON.parse(JSON.stringify(req.headers));
   // originHost.host = req.body.host;
