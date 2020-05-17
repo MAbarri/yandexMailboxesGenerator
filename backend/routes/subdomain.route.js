@@ -88,7 +88,7 @@ subdomainRoute.route('/exportUsers/:id').get((req, res) => {
     } else {
       let emails = [];
       _.each(data, function(item){
-        emails=emails.concat( _.map(_.filter(item.emails, function(mail){ return mail.login && mail.password}), function(email){ return {login: email.login+"@"+item.name, password: email.password, firstname: '', lastname:'', birth_date:'', sex: ''}}));
+        emails=emails.concat( _.map(_.filter(item.emails, function(mail){ return mail.login && mail.password}), function(email){ return {login: email.login+"@"+item.name, password: email.password, firstname: email.iname, lastname:email.fname, birth_date:email.birth_date, sex: email.sex ? 'male' : "female"}}));
       })
       emails = _.flatten(emails);
       // console.log('emails', emails)
