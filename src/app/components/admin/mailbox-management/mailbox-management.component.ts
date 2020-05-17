@@ -94,6 +94,9 @@ export class MailboxManagementComponent implements OnInit {
   exportExistingUsers(){
     this.apiService.exportExistingUsers();
   }
+  exportCSVEmails(){
+    this.apiService.exportCSVEmails();
+  }
   makeid(length) {
      var result           = '';
      var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789'

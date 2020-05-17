@@ -20,13 +20,14 @@
     </div>
   </div>
   <div class="row md-top">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <h2>Yandex Users Setup</h2>
       <p>You can get PDD Token for each created domain by <a href="https://pddimp.yandex.ru/api2/admin/get_token" target="_blank">Clicking here</a></p>
       <p>please fill PDD Tokens for created Subdomains in the inputs below</p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <button style="float: right;" (click)="exportExistingUsers()" type="button" class="btn btn-primary">Export Existing Users</button>
+      <button style="float: right;margin-right: 5px;" (click)="exportCSVEmails()" type="button" class="btn btn-primary">Export CSV Emails</button>
     </div>
     <div class="col-md-12">
       <form class="row" [formGroup]="yandexEmailsForm" (ngSubmit)="yandexEmailsSubmit()">

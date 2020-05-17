@@ -152,6 +152,9 @@ export class ApiService {
     exportExistingUsers() {
       window.open(`${this.baseUri}exportExistingUsers`)
     }
+    exportCSVEmails() {
+      window.open(`${this.baseUri}exportCSVEmails`)
+    }
     exportUsers(domain) {
       window.open(`${this.baseUri}exportUsers/${domain}`)
     }
