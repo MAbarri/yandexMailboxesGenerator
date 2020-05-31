@@ -82,7 +82,8 @@ subdomainRoute.route('/exportCSVEmails').get((req, res) => {
 })
 subdomainRoute.route('/exportUsers/:id').get((req, res) => {
   console.log('exportUsers', req.params.id)
-  Subdomain.find({_id: req.params.id}).lean().exec(function(err, data) {
+  var query = req.params.id && req.params.id != "undefined" ? {_id: req.params.id} : {};
+  Subdomain.find(query).lean().exec(function(err, data) {
     if (err) {
       return next(err)
     } else {
